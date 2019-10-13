@@ -14,7 +14,7 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "test": "jest --watch",
-    "heroku-postbuild": "cd weddingBells && npm install && npm run build` as a `heroku-postbuild"
+    "heroku-postbuild": "cd weddingBells && yarn install && yarn run build` as a `heroku-postbuild"
   },
   "jest": {
     "testEnvirnoment": "node"
