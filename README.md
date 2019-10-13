@@ -1,3 +1,47 @@
+## Background
+
+**Pitch**
+
+#Allows users to interactively manage and view, in real time, guests lists, invitation status, and gift registry.
+
+**MVP**
+
+##Guest Tabs
+
+- Announcement Section
+  - Each announcement contains
+    - Heading
+    - Sub Heading
+    - Text Body
+- Invitation (toggle RSVP status)
+  - Togglable RSVP status viewable anywhere on site
+- Registry Tab (boxes with links to sites with registries)
+
+##Admin Tabs
+
+- Invitation Tab (editable)
+- Registry Tab (editable)
+- Announcement Section
+  - Immediate updates that are sent via communication settings that the user set, also viewable on the website
+- Guest RSVP page
+  - Color coded based on status
+  - Manual user addition and status
+
+Individualized web links for each couple that signs up
+
+**Stretch Goals**
+
+##https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196ce043648e
+
+## Database Schema
+
+<img
+  src="#{Insert the URL to the database schema. Use https://www.dbdesigner.net/ to create this.}"
+  alt="backend database schema"  
+/>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/02ddaf23-507e-4101-9b9b-a7156c58000f/deploy-status)](https://app.netlify.com/sites/labspt5weddingbells/deploys)
+
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
 
 🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
@@ -123,11 +167,12 @@ In order for the app to function correctly, the user must set up their own envir
 create a .env file that includes the following:
 
 🚫 These are just examples, replace them with the specifics for your app
-  
- _ STAGING_DB - optional development db for using functionality not available in SQLite
-_ NODE_ENV - set to "development" until ready for "production"
-_ JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;_(-_=+)') for i in range(50)])
-_ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
+
+_ STAGING_DB - optional development db for using functionality not available in SQLite
+_ NODE\*ENV - set to "development" until ready for "production"
+
+- JWT*SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-_=+)') for i in range(50)])
+  _ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
 
 ## Contributing
 
