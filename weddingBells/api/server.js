@@ -51,9 +51,7 @@ server.use("/api/ex2", restricted, example2Router);
 
 //This is what is shown from the backend when you go to the localhost:5000/
 server.get("/", (req, res) => {
-  res.send(
-    "Congrats! You have a functioning templated project up and running "
-  );
+  res.send("Welcome to the Wedding Bells Back End Repo");
 });
 
 module.exports = server;

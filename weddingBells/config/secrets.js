@@ -1,3 +1,5 @@
 module.exports = {
-  jwtSecret: process.env.JWT_SECRET || "#{Create a string for your secret}"
+  jwtSecret:
+    process.env.JWT_SECRET ||
+    "lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20"
 };
