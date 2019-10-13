@@ -13,8 +13,7 @@
     "db:setup": "yarn db:drop && yarn db:migrate && yarn db:seed",
     "start": "node index.js",
     "server": "nodemon index.js",
-    "test": "jest --watch",
-    "heroku-postbuild": "cd weddingBells && yarn install && yarn run build` as a `heroku-postbuild"
+    "test": "jest --watch"
   },
   "jest": {
     "testEnvirnoment": "node"
