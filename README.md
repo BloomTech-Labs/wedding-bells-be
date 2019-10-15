@@ -50,7 +50,7 @@ Individualized web links for each couple that signs up
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at Heroku (🚫add URL here) <br>
+#### 1️⃣ Backend delpoyed at Heroku https://lambda-wedding-bells.herokuapp.com/ <br>
 
 ## 1️⃣ Getting started
 
