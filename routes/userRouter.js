@@ -64,6 +64,7 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
+// EDIT USER with ID
 router.put("/:id", async (req, res) => {
 	const { id } = req.params;
 	const changes = req.body;
@@ -73,7 +74,6 @@ router.put("/:id", async (req, res) => {
 
 		if (user) {
 			const updatedUser = await User.update(changes, id);
-			console.log(user);
 
 			res.json(updatedUser);
 		} else {
