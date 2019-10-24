@@ -2,11 +2,11 @@
 
 **Pitch**
 
-#Allows users to interactively manage and view, in real time, guests lists, invitation status, and gift registry.
+Allows users to interactively manage and view, in real time, guests lists, invitation status, and gift registry.
 
 **MVP**
 
-##Guest Tabs
+## Guest Tabs
 
 - Announcement Section
   - Each announcement contains
@@ -17,7 +17,7 @@
   - Togglable RSVP status viewable anywhere on site
 - Registry Tab (boxes with links to sites with registries)
 
-##Admin Tabs
+## Admin Tabs
 
 - Invitation Tab (editable)
 - Registry Tab (editable)
@@ -31,7 +31,7 @@ Individualized web links for each couple that signs up
 
 **Stretch Goals**
 
-##https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196ce043648e
+https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196ce043648e
 
 ## Database Schema
 
@@ -48,11 +48,11 @@ Individualized web links for each couple that signs up
 
 🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
 
-# API Documentation
+## API Documentation
 
 #### 1️⃣ Backend delpoyed at Heroku https://lambda-wedding-bells.herokuapp.com/ <br>
 
-## 1️⃣ Getting started
+###  1️⃣ Getting started
 
 To get the server running locally:
 
@@ -72,7 +72,7 @@ To get the server running locally:
 - Point Three
 - Point Four
 
-## 2️⃣ Endpoints
+###  2️⃣ Endpoints
 
 🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
@@ -168,11 +168,22 @@ create a .env file that includes the following:
 
 🚫 These are just examples, replace them with the specifics for your app
 
-_ STAGING_DB - optional development db for using functionality not available in SQLite
-_ NODE\*ENV - set to "development" until ready for "production"
+- `STAGING_DB` - optional development db for using functionality not available in SQLite
+- `NODE_ENV` - set to "development" until ready for "production"
+- `JWT_SECRET` - you can generate this by using a python shell and running:
 
-- JWT*SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-_=+)') for i in range(50)])
-  _ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
+```python
+import random
+
+CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-_=+'
+
+print(''.join(
+    [random.SystemRandom().choice(CHARS) for i in range(len(CHARS))]
+  )
+)
+```
+- `SENDGRID_API_KEY` - this is generated in your Sendgrid account
+- `STRIPE_SECRET` - this is generated in the Stripe dashboard
 
 ## Contributing
 
