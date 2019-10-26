@@ -24,7 +24,7 @@ module.exports = {
 			directory: './database/migrations',
 		},
 		seeds: {
-			directory: './database/seeds/production',
+			directory: './database/seeds',
 		},
 	},
 };
