@@ -42,11 +42,11 @@ async function remove(id) {
 	}
 }
 
-async function update(exercise, id) {
+async function update(user, id) {
 	try {
 		const updateUser = await db("users")
 			.where({ id })
-			.update(exercise);
+			.update(user);
 		return updateUser;
 	} catch (err) {
 		throw new Error(err);
