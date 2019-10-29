@@ -1,10 +1,10 @@
 {
-  "name": "Weddingbellsbe",
+	"name": "Weddingbellsbe",
 	"version": "1.0.0",
-  "description": "Allows users to interactively manage and view, in real time, guests lists, invitation status, and gift registry.",
+	"description": "Allows users to interactively manage and view, in real time, guests lists, invitation status, and gift registry.",
 	"main": "index.js",
-  "repository": "https://github.com/Lambda-School-Labs/wedding-bells-be",
-  "author": "Dan Sample, Cedric Amaya, Marco Guzman, Poly Goveia, Sammy Chang, Davorin Piljic, Brey Batten",
+	"repository": "https://github.com/Lambda-School-Labs/wedding-bells-be",
+	"author": "Dan Sample, Cedric Amaya, Marco Guzman, Poly Goveia, Sammy Chang, Davorin Piljic, Brey Batten",
 	"license": "MIT",
 	"scripts": {
 		"db:migrate": "./node_modules/.bin/knex migrate:latest",
@@ -28,7 +28,7 @@
 		"express-session": "^1.16.2",
 		"helmet": "^3.20.0",
 		"jsonwebtoken": "^8.5.1",
-		"knex": "^0.19.3",
+		"knex": "^0.19.5",
 		"pg": "^7.12.1",
 		"sqlite3": "^4.1.0"
 	},
