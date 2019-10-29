@@ -19,12 +19,16 @@ router.get("/", async (req, res) => {
 
 //POST to User table
 router.post("/", async (req, res) => {
+	const user = req.body;
 	try {
-		const user = await User.add(req.body);
 		if (user) {
-			res.status(201).json(user);
-		} else {
-			res.status(404).json({ message: "user could not be added" });
+			console.log(user);
+			const newUser = await User.add(user);
+			if (newUser) {
+				res.status(201).json(newUser);
+			} else {
+				res.status(404).json({ message: "user could not be added" });
+			}
 		}
 	} catch (err) {
 		res.status(500).json({ message: err.message });
