@@ -3,10 +3,8 @@ module.exports = {
 	development: {
 		client: "pg",
 		useNullAsDefault: true,
-		connection: {
-			connectionString: process.env.DATABASE_URL,
-			ssl: true
-		},
+		connection: process.env.DATABASE_URL,
+		ssl: true,
 		// pool: {
 		// 	afterCreate: (conn, done) => {
 		// 		conn.run("PRAGMA foreign_keys = ON", done);
@@ -20,17 +18,13 @@ module.exports = {
 		},
 	},
 	production: {
-		client: 'pg',
-		connection: {
-			connectionString: process.env.DATABASE_URL,
-			ssl: true
-		},
+		client: "pg",
+		connection: process.env.DATABASE_URL,
 		migrations: {
-			directory: './database/migrations',
+			directory: "./database/migrations",
 		},
 		seeds: {
-			directory: './database/seeds',
+			directory: "./database/seeds",
 		},
 	},
 };
-
