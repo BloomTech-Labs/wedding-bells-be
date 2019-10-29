@@ -44,7 +44,7 @@ async function remove(id) {
 
 async function update(user, id) {
 	try {
-		const updateUser = await db("users")
+		const updateUser = await db("couples")
 			.where({ id })
 			.update(user);
 		return updateUser;
