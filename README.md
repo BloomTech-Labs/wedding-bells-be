@@ -90,12 +90,12 @@ Why did you choose this framework?
 
 > NOTE: all of the following API routes are prefixed with `/api`
 
-| Method | Endpoint             | Access Control | Description                                  |
-| ------ | -------------------- | -------------- | -------------------------------------------- |
-| GET    | `/couples/:coupleId` | all users      | Returns the information for an organization. |
-| POST   | `/couples`           | all users      | Returns the information for an organization. |
-| PUT    | `/couples/:coupleId` | owners         | Modify an existing organization.             |
-| DELETE | `/couples/:coupleId` | owners         | Delete an organization.                      |
+| Method | Endpoint             | Access Control | Description                                    |
+| ------ | -------------------- | -------------- | ---------------------------------------------- |
+| GET    | `/couples/:coupleId` | owners         | Returns the information for a specific couple. |
+| POST   | `/couples`           | everyone       | Creates a new couple record.                   |
+| PUT    | `/couples/:coupleId` | owners         | Modify a couple couple.                        |
+| DELETE | `/couples/:coupleId` | owners         | Delete a couple.                               |
 
 #### Weddings Routes
 
