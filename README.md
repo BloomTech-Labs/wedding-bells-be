@@ -118,14 +118,13 @@ Why did you choose this framework?
 
 #### Vendors Routes
 
-<!-- TODO -->
-
-| Method | Endpoint             | Access Control      | Description                                        |
-| ------ | -------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/vendors/:vendorId` | owners, supervisors | Returns all users for an organization.             |
-| POST   | `/vendors`           | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/vendors/:vendorId` | owners, supervisors |                                                    |
-| DELETE | `/vendors/:vendorId` | owners, supervisors |                                                    |
+| Method | Endpoint             | Access Control | Description                                    |
+| ------ | -------------------- | -------------- | ---------------------------------------------- |
+| GET    | `/vendors`           | everyone       | Returns all vendors.                           |
+| GET    | `/vendors/:vendorId` | everyone       | Returns the information for a specific vendor. |
+| POST   | `/vendors`           | admins         | Creates a new vendor.                          |
+| PUT    | `/vendors/:vendorId` | admins         | Modify a vendor.                               |
+| DELETE | `/vendors/:vendorId` | admins         | Delete a vendor.                               |
 
 # Data Model
 
