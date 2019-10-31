@@ -93,20 +93,19 @@ Why did you choose this framework?
 | Method | Endpoint             | Access Control | Description                                    |
 | ------ | -------------------- | -------------- | ---------------------------------------------- |
 | GET    | `/couples/:coupleId` | owners         | Returns the information for a specific couple. |
-| POST   | `/couples`           | everyone       | Creates a new couple record.                   |
-| PUT    | `/couples/:coupleId` | owners         | Modify a couple couple.                        |
+| POST   | `/couples`           | everyone       | Creates a new couple.                          |
+| PUT    | `/couples/:coupleId` | owners         | Modify a couple.                               |
 | DELETE | `/couples/:coupleId` | owners         | Delete a couple.                               |
 
 #### Weddings Routes
 
-<!-- TODO -->
-
-| Method | Endpoint               | Access Control      | Description                                        |
-| ------ | ---------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/weddings/:weddingId` | owners, supervisors | Returns all users for an organization.             |
-| POST   | `/weddings`            | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/weddings/:weddingId` | owners, supervisors |                                                    |
-| DELETE | `/weddings/:weddingId` | owners, supervisors |                                                    |
+| Method | Endpoint               | Access Control | Description                                     |
+| ------ | ---------------------- | -------------- | ----------------------------------------------- |
+| GET    | `/weddings`            | everyone       | Returns a list of all weddings.                 |
+| GET    | `/weddings/:weddingId` | owners         | Returns the information for a specific wedding. |
+| POST   | `/weddings`            | everyone       | Creates a new wedding.                          |
+| PUT    | `/weddings/:weddingId` | owners         | Modify a wedding.                               |
+| DELETE | `/weddings/:weddingId` | owners         | Delete a wedding.                               |
 
 #### Guests Routes
 
