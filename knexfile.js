@@ -3,8 +3,10 @@ module.exports = {
 	development: {
 		client: "pg",
 		useNullAsDefault: true,
-		connection: process.env.DATABASE_URL,
-		ssl:true,
+		connection: {
+			connectionString: process.env.DATABASE_URL,
+			ssl: true
+		},
 		// pool: {
 		// 	afterCreate: (conn, done) => {
 		// 		conn.run("PRAGMA foreign_keys = ON", done);
