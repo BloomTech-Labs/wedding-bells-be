@@ -109,14 +109,12 @@ Why did you choose this framework?
 
 #### Guests Routes
 
-<!-- TODO -->
-
-| Method | Endpoint           | Access Control      | Description                                        |
-| ------ | ------------------ | ------------------- | -------------------------------------------------- |
-| GET    | `/guests/:guestId` | owners, supervisors | Returns all users for an organization.             |
-| POST   | `/guests`          | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/guests/:guestId` | owners, supervisors |                                                    |
-| DELETE | `/guests/:guestId` | owners, supervisors |                                                    |
+| Method | Endpoint           | Access Control | Description                       |
+| ------ | ------------------ | -------------- | --------------------------------- |
+| GET    | `/guests/:guestId` | owners         | Returns all guests for a wedding. |
+| POST   | `/guests`          | everyone       | Creates a new guest.              |
+| PUT    | `/guests/:guestId` | owners         | Modify a guest.                   |
+| DELETE | `/guests/:guestId` | owners         | Delete a guest.                   |
 
 #### Vendors Routes
 
