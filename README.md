@@ -235,12 +235,13 @@ category_type
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
-After cloning the repo, rename the `.env.example` file to `.env` and fill in each
+After cloning the repo, copy the `.env.example` file to `.env` and fill in each
 of the variables with your information.
 
-- `DATABASE_URL` - you can generate this by using a python shell and running:
-
-<!-- TODO - add the other env vars -->
+- `DATABASE_URL` - the connection string of either your local or the production Postgres database
+- `DB_ENV` - similar to `NODE_ENV`, should be either one of "development" or "production". used to determine which database to connect to
+- `JWT_SECRET` - the string to be used for generating JSON Web Tokens (JWT)
+- `PORT` - number designating what port to run the backend server on
 
 ## Contributing
 
