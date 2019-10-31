@@ -5,7 +5,7 @@ module.exports = {
 		useNullAsDefault: true,
 		connection: {
 			connectionString: process.env.DATABASE_URL,
-			ssl: true
+			ssl: true,
 		},
 		// pool: {
 		// 	afterCreate: (conn, done) => {
@@ -20,14 +20,13 @@ module.exports = {
 		},
 	},
 	production: {
-		client: 'pg',
+		client: "pg",
 		connection: process.env.DATABASE_URL,
 		migrations: {
-			directory: './database/migrations',
+			directory: "./database/migrations",
 		},
 		seeds: {
-			directory: './database/seeds',
+			directory: "./database/seeds",
 		},
 	},
 };
-
