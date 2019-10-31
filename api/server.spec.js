@@ -1,5 +1,5 @@
 const request = require("supertest");
-const server = require("./api/server")
+const server = require("../api/server")
 
 /* ---------------------- User Endpoints ---------------*/
 describe('/api/users CRUD', function() {
