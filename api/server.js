@@ -6,6 +6,7 @@ const session = require("express-session");
 const knexSessionStore = require("connect-session-knex")(session);
 const server = express();
 const usersRouter = require("../routes/userRouter");
+const vendorsRouter = require("../routes/vendorRouter");
 
 //Import routes from the router file here
 // const example1Router = require("../routers/example1Router");
@@ -46,7 +47,7 @@ server.use(session(sessionOptions));
 
 // Route for Users
 server.use("/api/users", usersRouter);
-
+server.use("/api/vendors", vendorsRouter);
 //Insert routes for routers here
 //This one does not use authentication middleware
 // server.use("/api/ex1", example1Router);
