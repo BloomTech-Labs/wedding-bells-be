@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
 				res.status(404).json({ message: "user could not be added" });
 			}
 		}
-	} catch (err) {
+	} catch(err) {
 		res.status(500).json({ message: err.message });
 	}
 });
@@ -46,7 +46,7 @@ router.get("/:id", async (req, res) => {
 		} else {
 			res.status(404).json({ message: "could not find user" });
 		}
-	} catch (err) {
+	} catch(err) {
 		res.status(500).json({ message: "failed to get user" });
 	}
 });
@@ -79,7 +79,7 @@ router.put("/:id", async (req, res) => {
 		if (user) {
 			const updatedUser = await User.update(changes, id);
 
-			res.json(updatedUser);
+			res.status(200).json(updatedUser);
 		} else {
 			res.status(404).json({ message: "could not find user with given id" });
 		}
