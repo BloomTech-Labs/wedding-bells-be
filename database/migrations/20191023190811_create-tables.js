@@ -40,7 +40,7 @@ exports.up = function(knex) {
 				.notNullable();
 			table.integer("wedding_id").references("weddings.id");
 		})
-		
+
 		.createTable("vendors", table => {
 			table.increments();
 			table.string("company_name").notNullable();
@@ -69,8 +69,9 @@ exports.up = function(knex) {
 			table.increments();
 			table.string("title").notNullable();
 			table.string("announcement").notNullable();
+			table.datetime("time_stamp");
 			table.integer("couple_id").references("couples.id");
-		});		
+		});
 };
 
 exports.down = function(knex) {
