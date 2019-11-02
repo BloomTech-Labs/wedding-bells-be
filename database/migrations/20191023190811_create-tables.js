@@ -69,7 +69,7 @@ exports.up = function(knex) {
 			table.increments();
 			table.string("title").notNullable();
 			table.string("announcement").notNullable();
-			table.integer("time_stamp").notNullable();
+			table.datetime("time_stamp");
 			table.integer("couple_id").references("couples.id");
 		});
 };
