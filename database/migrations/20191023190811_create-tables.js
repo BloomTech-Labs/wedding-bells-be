@@ -40,7 +40,7 @@ exports.up = function(knex) {
 				.notNullable();
 			table.integer("wedding_id").references("weddings.id");
 		})
-
+		
 		.createTable("vendors", table => {
 			table.increments();
 			table.string("company_name").notNullable();
@@ -64,11 +64,18 @@ exports.up = function(knex) {
 			table.integer("wedding_id").references("weddings.id");
 			table.integer("vendor_id").references("vendors.id");
 			table.primary(["wedding_id", "vendor_id"]);
-		});
+		})
+		.createTable("announcements", table => {
+			table.increments();
+			table.string("title").notNullable();
+			table.string("announcement").notNullable();
+			table.integer("couple_id").references("couples.id");
+		});		
 };
 
 exports.down = function(knex) {
 	return knex.schema
+		.dropTableIfExists("announcements")
 		.dropTableIfExists("wedding_vendors")
 		.dropTableIfExists("vendors")
 		.dropTableIfExists("guests")
