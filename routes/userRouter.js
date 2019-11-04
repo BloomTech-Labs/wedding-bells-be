@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
 
 //POST to User table
 router.post("/", async (req, res) => {
-	const user = req.body;
+	const user = req.body;	
 	try {
 		if (user) {
 			console.log(user);
@@ -54,16 +54,15 @@ router.get("/:id", async (req, res) => {
 // DEL request to with ID
 router.delete("/:id", async (req, res) => {
 	const { id } = req.params;
-
 	try {
 		const deleted = await User.remove(id);
 
 		if (deleted) {
-			res.json({ removed: deleted });
+			res.status(200).json({ removed: deleted });
 		} else {
 			res.status(404).json({ message: "could not find user with given id" });
 		}
-	} catch (err) {
+	} catch(err) {
 		res.status(500).json({ message: "failed to delete user" });
 	}
 });

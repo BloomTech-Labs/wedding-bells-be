@@ -7,16 +7,17 @@ describe('/api/users CRUD', function() {
         request(server)
             .post('/api/users')
             .send({
-                spouse_one_name: "lonnielamar",
-                spouse_two_name: "LolaStevens",
-                email: "testemail129333443@gmail.com",
-                password: "password123ddswwdwssdsds"
+                spouse_one_name: "Lannie",
+                spouse_two_name: "Jay",
+                email: "lannyjay@gmail.com",
+                password: "dontgetmarriedagainguysplease"
             })
             .set('Accept', 'application/json')
-            .expect(201, done);
+            .expect(201, done)
+           
     });
 
-    it('should return 500 if missing spouse names,email,password fields of user', function (done) {
+    it('should return 500 if missing spouse names,email,password fields of user', function(done) {
         request(server)
             .post('/api/users')
             .send({ spouse_one_name: '', spouse_two_name: null, email: '', password: '' })
@@ -30,29 +31,29 @@ describe('/api/users CRUD', function() {
                 spouse_one_name: "Robert",
                 spouse_two_name: "Jane",
                 email: "robertandjane@gmail.com",
-                password: "partytime123",
+                password: "partytime123"
             })
             .expect(200, done)
-            // .end(function (err, res) {
-            //     expect(typeof res).toBe('object');
-            //     if (err) return done(err);
-            //     done();
-            // });
+        // .end(function (err, res) {
+        //     expect(typeof res).toBe('object');
+        //     if (err) return done(err);
+        //     done();
+        // });
     });
 
     it('should delete a user', function(done) {
         request(server)
-            .del('/api/users/5')
-            .expect(200, done)   
+            .del('/api/users/354')
+            .expect(200, done)
     });
  
-    it('should respond with 404 when no user is found to delete', function (done) {
+    it('should respond with 404 when no user is found to delete', function(done) {
         request(server)
-            .del('/api/users/50')
+            .del('/api/users/')
             .expect(404, done);
-    })
+    });
 
-})
+});
 
 
 
