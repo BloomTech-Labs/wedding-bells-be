@@ -9,7 +9,15 @@ const find = async weddingId => {
 	}
 };
 
-const findById = async id => {};
+const findById = async id => {
+	try {
+		return (await db("guests").where({ id }))[0];
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
+
 const findByFilter = async filter => {};
 const add = async guest => {};
 const update = async (id, guest) => {};
