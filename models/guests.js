@@ -1,6 +1,14 @@
 const db = require("../database/config");
 
-const find = async () => {};
+const find = async weddingId => {
+	try {
+		return await db("guests").where({ wedding_id: weddingId });
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
+
 const findById = async id => {};
 const findByFilter = async filter => {};
 const add = async guest => {};

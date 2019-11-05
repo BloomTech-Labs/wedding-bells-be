@@ -5,8 +5,8 @@ const guestsRouter = require("./guestsRouter");
 
 const express = require("express");
 
-const router = express.Router({ mergeParams: true });
-router.use("/api/weddings/:weddingId/guests", guestsRouter);
+const router = express.Router();
+router.use("/:weddingId/guests", guestsRouter);
 
 // GET VENDOR table
 router.get("/", async (req, res) => {
