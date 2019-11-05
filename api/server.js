@@ -48,7 +48,7 @@ server.use(session(sessionOptions));
 server.use("/api/users", usersRouter);
 server.use("/api/vendors", vendorsRouter);
 server.use("/api/weddings", weddingsRouter);
-server.use("/api/guests", guestsRouter);
+// server.use("/api/guests", guestsRouter);
 
 //This is what is shown from the backend when you go to the localhost:5000/
 server.get("/", (req, res) => {
