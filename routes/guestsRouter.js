@@ -1,4 +1,5 @@
 const router = require("express").Router({ mergeParams: true });
+const uuid = require("uuidv4").default;
 const Guest = require("../models/guests");
 
 router.get("/", async (req, res) => {
@@ -32,7 +33,16 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+	const { weddingId } = req.params;
+	const guest = req.body;
+	if (Object.entries(guest).length === 0 || !guest.name || !guest.email) {
+		return res.status(400).json({
+			error: "Missing one or more required properties: name, email",
+		});
+	}
 	try {
+		const newGuest = await Guest.add({ id: uuid(), ...guest }, weddingId);
+		res.status(201).json(newGuest);
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,

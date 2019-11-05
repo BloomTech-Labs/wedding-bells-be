@@ -45,4 +45,64 @@ describe("Guests Router", () => {
 			expect(response.status).toBe(404);
 		});
 	});
+
+	describe("POST /api/weddings/:weddingId/guests", () => {
+		beforeAll(async () => {
+			await db("guests").truncate();
+			await db.seed.run();
+		});
+
+		test("should return HTTP status code 201 if all data present", async () => {
+			const mockGuest = {
+				name: "Ced",
+				email: "ced@gmail.com",
+			};
+
+			const response = await request(server)
+				.post("/api/weddings/1/guests")
+				.send(mockGuest);
+
+			expect(response.status).toBe(201);
+		});
+		test("should create a new guest if all data present", async () => {
+			const mockGuest = {
+				name: "Ced",
+				email: "ced@gmail.com",
+			};
+
+			const response = await request(server)
+				.post("/api/weddings/1/guests")
+				.send(mockGuest);
+
+			expect(response.body).toBeInstanceOf(Object);
+			expect(response.body).toHaveProperty("id");
+			expect(response.body).toHaveProperty("name");
+			expect(response.body).toHaveProperty("email");
+			expect(response.body).toHaveProperty("is_going");
+			expect(response.body).toHaveProperty("has_responded");
+			expect(response.body).toHaveProperty("plus_one");
+			expect(response.body).toHaveProperty("wedding_id");
+		});
+		test("should return HTTP status code 400 if missing data", async () => {
+			const invalidMockGuest = {
+				// missing email
+				name: "Ced",
+			};
+
+			const response = await request(server)
+				.post("/api/weddings/1/guests")
+				.send(invalidMockGuest);
+
+			expect(response.status).toBe(400);
+		});
+		test("should return HTTP status code 400 if given no data", async () => {
+			const emptyMockGuest = {};
+
+			const response = await request(server)
+				.post("/api/weddings/1/guests")
+				.send(emptyMockGuest);
+
+			expect(response.status).toBe(400);
+		});
+	});
 });

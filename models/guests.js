@@ -19,7 +19,19 @@ const findById = async id => {
 };
 
 const findByFilter = async filter => {};
-const add = async guest => {};
+
+const add = async (guest, weddingId) => {
+	try {
+		const [id] = await db("guests")
+			.insert({ ...guest, wedding_id: weddingId })
+			.returning("id");
+		return await findById(id);
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
+
 const update = async (id, guest) => {};
 const remove = async id => {};
 
