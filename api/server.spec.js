@@ -57,7 +57,7 @@ describe('/api/users CRUD', function() {
        
     });
 
-    it('should return the user table with ID', async function(done) { 
+    it('should return the user associated with the given ID', async function(done) { 
         request(server)
             .get('/api/users/1')
             .expect(200)
