@@ -13,7 +13,7 @@
 		"db:setup": "yarn db:drop && yarn db:migrate && yarn db:seed",
 		"start": "node index.js",
 		"server": "nodemon index.js",
-		"test": "jest --watch"
+		"test": "cross-env DB_ENV=testing jest --watch"
 	},
 	"jest": {
 		"testEnvironment": "node"
@@ -35,6 +35,7 @@
 		"sqlite3": "^4.1.0"
 	},
 	"devDependencies": {
+		"cross-env": "^6.0.3",
 		"jest": "^24.9.0",
 		"nodemon": "^1.19.1",
 		"supertest": "^4.0.2"
