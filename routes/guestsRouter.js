@@ -51,7 +51,18 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+	const { id, weddingId } = req.params;
+	const updates = req.body;
 	try {
+		const guest = await Guest.findById(id);
+		if (!guest) {
+			return res.status(404).json({
+				error: `No guest exists with id ${id}!`,
+			});
+		} else {
+			await Guest.update(id, updates);
+			res.status(204).end();
+		}
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,
