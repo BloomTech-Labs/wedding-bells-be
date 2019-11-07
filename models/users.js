@@ -39,6 +39,7 @@ async function remove(id) {
 			.where({ id })
 			.del();
 		return getUser ? getUser : null;
+		
 	} catch {
 		throw new Error(err);
 	}

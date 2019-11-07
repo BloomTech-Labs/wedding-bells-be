@@ -5,13 +5,12 @@ const helmet = require("helmet");
 const session = require("express-session");
 const knexSessionStore = require("connect-session-knex")(session);
 const server = express();
+
+//Import routes from the router file here
+const announcementRouter = require("../routes/announcementRouter");
 const usersRouter = require("../routes/userRouter");
 const vendorsRouter = require("../routes/vendorRouter");
 const weddingsRouter = require("../routes/weddingRouter");
-
-//Import routes from the router file here
-// const example1Router = require("../routers/example1Router");
-// const example2Router = require("../routers/example2Router");
 
 //Import the secrets file for jsonwebtoken here
 const secrets = require("../config/secrets.js");
@@ -46,15 +45,11 @@ server.use(cors());
 server.use(express.json());
 server.use(session(sessionOptions));
 
-// Route for Users
+// Routes
+server.use("/api/announcements", announcementRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/vendors", vendorsRouter);
 server.use("/api/weddings", weddingsRouter);
-//Insert routes for routers here
-//This one does not use authentication middleware
-// server.use("/api/ex1", example1Router);
-// //This one does use authentication middleware
-// server.use("/api/ex2", restricted, example2Router);
 
 //This is what is shown from the backend when you go to the localhost:5000/
 server.get("/", (req, res) => {
