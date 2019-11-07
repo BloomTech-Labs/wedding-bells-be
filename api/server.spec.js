@@ -1,8 +1,6 @@
 const request = require("supertest");
 const server = require("../api/server");
 
-
-
 /* ---------------------- User Endpoints ---------------*/
 
 describe("GET /", () => {
@@ -51,34 +49,19 @@ describe("/api/users CRUD", function() {
 		done();
 	});
 
-	it("should return the user table with ID", async function(done) {
+	it("should return the user associated with the given ID", async function(done) {
 		request(server)
 			.get("/api/users/1")
 			.expect(200);
 		done();
 	});
 
-    it('should return the user associated with the given ID', async function(done) { 
-        request(server)
-            .get('/api/users/1')
-            .expect(200)
-            done()
-    });
-    
-    it('should delete a user', async function(done) {
-            request(server)
-                .del('/api/users/58')
-                .expect(200)
-                done()
-    });
-    
- 
-    it('should respond with 404 when no user is found to delete', async function(done) {
-        request(server)
-            .del('/api/users/2')
-            .expect(404)
-            done()
-    });
+	it("should delete a user", async function(done) {
+		request(server)
+			.del("/api/users/58")
+			.expect(200);
+		done();
+	});
 
 	it("should respond with 404 when no user is found to delete", async function(done) {
 		request(server)
