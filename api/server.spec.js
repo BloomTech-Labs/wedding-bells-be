@@ -58,14 +58,14 @@ describe("/api/users CRUD", function() {
 
 	it("should delete a user", async function(done) {
 		request(server)
-			.del("/api/users/58")
-			.expect(200);
-		done();
+			.del("/api/users/1")
+			.expect(200,done);
+		;
 	});
 
 	it("should respond with 404 when no user is found to delete", async function(done) {
 		request(server)
-			.del("/api/users/2")
+			.del("/api/users/")
 			.expect(404);
 		done();
 	});
