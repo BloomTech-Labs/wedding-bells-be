@@ -1,6 +1,7 @@
 const router = require("express").Router({ mergeParams: true });
 const uuid = require("uuidv4").default;
 const Guest = require("../models/guests");
+const { findGuestById } = require("../middleware");
 
 router.get("/", async (req, res) => {
 	const { weddingId } = req.params;
@@ -14,22 +15,9 @@ router.get("/", async (req, res) => {
 	}
 });
 
-router.get("/:id", async (req, res) => {
-	const { id, weddingId } = req.params;
-	try {
-		const guest = await Guest.findById(id);
-		if (!guest) {
-			return res.status(404).json({
-				error: `No guest exists with id ${id}!`,
-			});
-		} else {
-			res.status(200).json(guest);
-		}
-	} catch (err) {
-		res.status(500).json({
-			error: err.message,
-		});
-	}
+router.get("/:id", findGuestById, async (req, res) => {
+	const { guest } = req;
+	res.status(200).json(guest);
 });
 
 router.post("/", async (req, res) => {
@@ -50,19 +38,12 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.put("/:id", async (req, res) => {
-	const { id, weddingId } = req.params;
+router.put("/:id", findGuestById, async (req, res) => {
+	const { id } = req.params;
 	const updates = req.body;
 	try {
-		const guest = await Guest.findById(id);
-		if (!guest) {
-			return res.status(404).json({
-				error: `No guest exists with id ${id}!`,
-			});
-		} else {
-			await Guest.update(id, updates);
-			res.status(204).end();
-		}
+		await Guest.update(id, updates);
+		res.status(204).end();
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,
@@ -70,18 +51,11 @@ router.put("/:id", async (req, res) => {
 	}
 });
 
-router.delete("/:id", async (req, res) => {
-	const { id, weddingId } = req.params;
+router.delete("/:id", findGuestById, async (req, res) => {
+	const { id } = req.params;
 	try {
-		const guest = await Guest.findById(id);
-		if (!guest) {
-			return res.status(404).json({
-				error: `No guest exists with id ${id}!`,
-			});
-		} else {
-			await Guest.remove(id);
-			res.status(204).end();
-		}
+		await Guest.remove(id);
+		res.status(204).end();
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,
