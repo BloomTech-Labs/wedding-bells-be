@@ -59,7 +59,16 @@ const update = async (id, updates) => {
 	}
 };
 
-const remove = async id => {};
+const remove = async id => {
+	try {
+		await db("guests")
+			.where({ id })
+			.del();
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
 
 module.exports = {
 	find,

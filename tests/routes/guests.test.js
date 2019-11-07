@@ -132,4 +132,40 @@ describe("Guests Router", () => {
 			expect(response.status).toBe(404);
 		});
 	});
+
+	describe("DELETE /api/weddings/:weddingId/guests/:id", () => {
+		/**
+		 * The `beforeEach()` method runs, well, before each of the `test()` methods
+		 * inside this specific `describe()` block. The `beforeEach()` is used to
+		 * delete then reseed the Guests table since we are making changes directly
+		 * to it. Without it, other tests ran subsequently after these DELETE tests will
+		 * fail because the specific guest they are operating on would no longer exist.
+		 *
+		 * `beforeEach()` references:
+		 *  - https://jestjs.io/docs/en/api#beforeeachfn-timeout
+		 */
+		beforeEach(async () => {
+			await db("guests").truncate();
+			await db.seed.run();
+		});
+		test("should return HTTP status code 204 if deletion was successful", async () => {
+			// below UUID is for the first seeded guest
+			const existingUserId = "40e6215d-b5c6-4896-987c-f30f3678f608";
+			const response = await request(server).delete(
+				`/api/weddings/1/guests/${existingUserId}`
+			);
+			expect(response.status).toBe(204);
+		});
+		test("should return HTTP status code 404 if guest not found", async () => {
+			const nonexistentUUID = "78929338-50db-4cd9-907e-df7c82217a4c";
+			const mockGuestInfo = {
+				is_going: true,
+				plus_one: true,
+			};
+			const response = await request(server)
+				.delete(`/api/weddings/1/guests/${nonexistentUUID}`)
+				.send(mockGuestInfo);
+			expect(response.status).toBe(404);
+		});
+	});
 });

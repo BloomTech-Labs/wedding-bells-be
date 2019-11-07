@@ -71,7 +71,17 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+	const { id, weddingId } = req.params;
 	try {
+		const guest = await Guest.findById(id);
+		if (!guest) {
+			return res.status(404).json({
+				error: `No guest exists with id ${id}!`,
+			});
+		} else {
+			await Guest.remove(id);
+			res.status(204).end();
+		}
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,
