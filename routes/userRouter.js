@@ -13,25 +13,7 @@ router.get("/", async (req, res) => {
 		const users = await User.find();
 		res.json(users);
 	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-});
-
-//POST to User table
-router.post("/", async (req, res) => {
-	const user = req.body;	
-	try {
-		if (user) {
-			console.log(user);
-			const newUser = await User.add(user);
-			if (newUser) {
-				res.status(201).json(newUser);
-			} else {
-				res.status(404).json({ message: "user could not be added" });
-			}
-		}
-	} catch(err) {
-		res.status(500).json({ message: err.message });
+		res.status(500).json({ error: err.message });
 	}
 });
 
@@ -44,26 +26,37 @@ router.get("/:id", async (req, res) => {
 		if (user) {
 			res.status(200).json(user);
 		} else {
-			res.status(404).json({ message: "could not find user" });
+			res.status(404).json({ message: "could not find user " });
 		}
-	} catch(err) {
+	} catch (err) {
 		res.status(500).json({ message: "failed to get user" });
 	}
 });
 
-// DEL request to with ID
-router.delete("/:id", async (req, res) => {
-	const { id } = req.params;
+//POST to User table
+router.post("/", async (req, res) => {
+	const user = req.body;
+	if (
+		Object.entries(user).length === 0 ||
+		!user.spouse_one_name ||
+		!user.spouse_two_name ||
+		!user.email ||
+		!user.password
+	) {
+		return res.status(400).json({
+			error:
+				"Missing one or more required properties: spouse_one_name, spouse_two_name, email, password",
+		});
+	}
 	try {
-		const deleted = await User.remove(id);
-
-		if (deleted) {
-			res.status(200).json({ removed: deleted });
-		} else {
-			res.status(404).json({ message: "could not find user with given id" });
+		if (user) {
+			const newUser = await User.add(user);
+			if (newUser) {
+				res.status(201).json(newUser);
+			}
 		}
-	} catch(err) {
-		res.status(500).json({ message: "failed to delete user" });
+	} catch (err) {
+		res.status(500).json({ error: err.message });
 	}
 });
 
@@ -84,6 +77,22 @@ router.put("/:id", async (req, res) => {
 		}
 	} catch (err) {
 		res.status(500).json({ message: "Failed to update user" });
+	}
+});
+
+// DEL request to with ID
+router.delete("/:id", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const deleted = await User.remove(id);
+
+		if (deleted) {
+			res.status(200).json({ removed: deleted });
+		} else {
+			res.status(404).json({ message: "could not find user with given id" });
+		}
+	} catch (err) {
+		res.status(500).json({ message: "failed to delete user" });
 	}
 });
 
