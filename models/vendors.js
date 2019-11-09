@@ -9,27 +9,24 @@ module.exports = {
 	update,
 };
 
-function find() {
-	return db("vendors").select("id", "company_name", "category");
+function find(weddingId) {
+	return db("vendors").where({ wedding_id: weddingId });
 }
 
 function findBy(filter) {
 	return db("vendors").where(filter);
 }
 
-async function add(vendor) {
+async function add(vendor, weddingId) {
 	const [id] = await db("vendors")
-		.insert(vendor)
+		.insert({ ...vendor, wedding_id: weddingId })
 		.returning("id");
 
 	return findById(id);
 }
 
 function findById(id) {
-	return db("vendors")
-		.select("id", "company_name")
-		.where({ id })
-		.first();
+	return db("vendors").where({ id });
 }
 
 async function remove(id) {
@@ -44,11 +41,11 @@ async function remove(id) {
 	}
 }
 
-async function update(vendor, id) {
+async function update(id, updates) {
 	try {
 		const updateVendor = await db("vendors")
 			.where({ id })
-			.update(vendor);
+			.update(updates);
 		return updateVendor;
 	} catch (err) {
 		throw new Error(err);

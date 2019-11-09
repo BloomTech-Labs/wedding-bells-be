@@ -1,88 +1,63 @@
-require("dotenv").config();
-
+const router = require("express").Router({ mergeParams: true });
 const Vendor = require("../models/vendors");
-
-const express = require("express");
-
-const router = express();
-router.use(express.json());
+const { findVendorById } = require("../middleware");
 
 // GET VENDOR table
 router.get("/", async (req, res) => {
+	const { weddingId } = req.params;
 	try {
-		const vendors = await Vendor.find();
-		res.json(vendors);
+		const vendors = await Vendor.find(weddingId);
+		res.status(200).json(vendors);
 	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-});
-
-//POST to VENDOR table
-router.post("/", async (req, res) => {
-	const vendor = req.body;
-	try {
-		if (vendor) {
-			const newVendor = await Vendor.add(vendor);
-			if (newVendor) {
-				res.status(201).json(newVendor);
-			} else {
-				res.status(404).json({ message: "vendor could not be added" });
-			}
-		}
-	} catch (err) {
-		res.status(500).json({ message: err.message });
+		res.status(500).json({ error: err.message });
 	}
 });
 
 // GET VENDOR table with ID
-router.get("/:id", async (req, res) => {
-	const { id } = req.params;
-	try {
-		const vendor = await Vendor.findById(id);
-
-		if (vendor) {
-			res.json(vendor);
-		} else {
-			res.status(404).json({ message: "could not find vendor" });
-		}
-	} catch (err) {
-		res.status(500).json({ message: "failed to get vendor" });
-	}
+router.get("/:id", findVendorById, async (req, res) => {
+	const { vendor } = req;
+	res.status(200).json(vendor);
 });
 
-// DEL request to with ID
-router.delete("/:id", async (req, res) => {
-	const { id } = req.params;
-
+//POST to VENDOR table
+router.post("/", async (req, res) => {
+	const { weddingId } = req.params;
+	const vendor = req.body;
+	if (Object.entries(vendor).length === 0 || !vendor.company_name) {
+		return res.status(400).json({ error: "Missing company name" });
+	}
 	try {
-		const deleted = await Vendor.remove(id);
-
-		if (deleted) {
-			res.json({ removed: deleted });
-		} else {
-			res.status(404).json({ message: "could not find vendor with given id" });
-		}
+		const newVendor = await Vendor.add(vendor, weddingId);
+		res.status(201).json(newVendor);
 	} catch (err) {
-		res.status(500).json({ message: "failed to delete vendor" });
+		res.status(500).json({ message: err.message });
 	}
 });
 
 // EDIT VENDOR with ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", findVendorById, async (req, res) => {
 	const { id } = req.params;
-	const changes = req.body;
-
+	const updates = req.body;
 	try {
-		const vendor = await Vendor.findById(id);
-
-		if (vendor) {
-			const updatedVendor = await Vendor.update(changes, id);
-			res.json(updatedVendor);
-		} else {
-			res.status(404).json({ message: "could not find vendor with given id" });
-		}
+		await Vendor.update(id, updates);
+		res.status(204).end();
 	} catch (err) {
-		res.status(500).json({ message: "Failed to update vendor" });
+		res.status(500).json({
+			error: err.message,
+		});
+	}
+});
+
+// DEL request to with ID
+router.delete("/:id", findVendorById, async (req, res) => {
+	const { id } = req.params;
+	try {
+		await Vendor.remove(id);
+		res.status(204).end();
+	} catch (err) {
+		res.status(500).json({
+			error: err.message,
+		});
 	}
 });
 

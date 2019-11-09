@@ -4,7 +4,8 @@ module.exports = {
 		client: "pg",
 		useNullAsDefault: true,
 		connection: {
-			connectionString: process.env.DB_CONNECTION_URI,
+			connectionString: process.env.DATABASE_URL,
+			ssl: true,
 		},
 		// pool: {
 		// 	afterCreate: (conn, done) => {
