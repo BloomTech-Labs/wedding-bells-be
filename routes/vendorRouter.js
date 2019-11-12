@@ -40,7 +40,10 @@ router.put("/:id", findVendorById, async (req, res) => {
 	const updates = req.body;
 	try {
 		await Vendor.update(id, updates);
-		res.status(204).end();
+		res
+			.status(200)
+			.json(updates)
+			.end();
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,
@@ -53,7 +56,10 @@ router.delete("/:id", findVendorById, async (req, res) => {
 	const { id } = req.params;
 	try {
 		await Vendor.remove(id);
-		res.status(204).end();
+		res
+			.status(200)
+			.json({ message: "Successfully Deleted" })
+			.end();
 	} catch (err) {
 		res.status(500).json({
 			error: err.message,

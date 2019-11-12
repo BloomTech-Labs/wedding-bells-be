@@ -42,6 +42,21 @@ async function remove(id) {
 }
 
 async function update(id, updates) {
+	/**
+	 * Simple error handling below:
+	 *
+	 * To protect clients (users of this API) from changing the `id` or
+	 * `wedding_id` of any given guest, we can delete those properties from the
+	 * `updates` object that is passed in from the router before submitting said
+	 * changes to the database. This check is necessary because never do we want
+	 * a guest's `id` or `wedding_id` to be changed (since changing the
+	 * `wedding_id` would effectively put the guest in a different couple's wedding.)
+	 *
+	 * `delete` keyword reference:
+	 * 	- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+	 */
+	delete updates.id;
+	delete updates.wedding_id;
 	try {
 		const updateVendor = await db("vendors")
 			.where({ id })
