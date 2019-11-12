@@ -59,6 +59,7 @@ exports.up = function(knex) {
 				"Transportation Service",
 				"Lighting",
 			]);
+			table.integer("wedding_id").references("weddings.id");
 		})
 		.createTable("wedding_vendors", table => {
 			table.integer("wedding_id").references("weddings.id");

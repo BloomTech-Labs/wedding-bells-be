@@ -10,7 +10,12 @@ module.exports = {
 };
 
 function find() {
-	return db("couples").select("id", "email");
+	return db("couples").select(
+		"id",
+		"spouse_one_name",
+		"spouse_two_name",
+		"email"
+	);
 }
 
 function findBy(filter) {
@@ -27,7 +32,7 @@ async function add(user) {
 
 function findById(id) {
 	return db("couples")
-		.select("id", "email")
+		.select("id", "spouse_one_name", "spouse_two_name", "email")
 		.where({ id })
 		.first();
 }
@@ -39,7 +44,6 @@ async function remove(id) {
 			.where({ id })
 			.del();
 		return getUser ? getUser : null;
-		
 	} catch {
 		throw new Error(err);
 	}
