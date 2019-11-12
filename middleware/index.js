@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Guest = require("../models/guests");
+const Vendor = require("../models/vendors");
 
 const secrets = require("../config/secrets");
 
@@ -60,8 +61,29 @@ const findGuestById = async (req, res, next) => {
 	}
 };
 
+const findVendorById = async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		const vendor = await Vendor.findById(id);
+		if (!vendor) {
+			return res.status(404).json({
+				error: `No vendor exists with id ${id}!`,
+			});
+		} else {
+			req.vendor = vendor;
+			next();
+		}
+	} catch (err) {
+		res.status(500).json({
+			error: err.message,
+		});
+		throw err;
+	}
+};
+
 module.exports = {
 	generateToken,
 	restricted,
 	findGuestById,
+	findVendorById,
 };

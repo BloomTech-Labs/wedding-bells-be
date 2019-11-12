@@ -2,12 +2,13 @@ require("dotenv").config();
 
 const Wedding = require("../models/weddings");
 const guestsRouter = require("./guestsRouter");
+const vendorRouter = require("./vendorRouter");
 
 const express = require("express");
 
 const router = express.Router();
 router.use("/:weddingId/guests", guestsRouter);
-
+router.use("/:weddingId/vendors", vendorRouter);
 // GET VENDOR table
 router.get("/", async (req, res) => {
 	try {
