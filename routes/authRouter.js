@@ -29,7 +29,8 @@ router.post("/register", async (req, res) => {
 	// catch if empty field
 	if (!spouse_one_name || !spouse_two_name || !email || !password) {
 		return res.status(400).json({
-			error: "`spouse_one_name`, `spouse_two_name`, `email`, and `password` are required!"
+			error:
+				"`spouse_one_name`, `spouse_two_name`, `email`, and `password` are required!",
 		});
 	}
 	// insert user with hashed password
@@ -43,10 +44,10 @@ router.post("/register", async (req, res) => {
 		});
 		const [couple] = await db("couples").where({ id });
 		return res.status(201).json(couple);
-	// error
+		// error
 	} catch (error) {
 		res.status(500).json({
-			error: error.message
+			error: error.message,
 		});
 	}
 });
@@ -74,6 +75,33 @@ router.post("/login", async (req, res) => {
 			return res.status(401).json({
 				error:
 					"You're killing me smalls! You need to provide matching and existing credentials",
+			});
+		}
+	} catch (error) {
+		res.status(500).json({
+			error: error.message,
+		});
+	}
+});
+
+router.post("/logout", restricted, async (req, res, next) => {
+	// Access to this route handler is granted if a token is supplied via the
+	// `Authorization` header as enforced by the `restricted` middleware.
+	// Thus, we can ensure there is a `userId` from the decodedJwt.
+	const userId = req.decodedJwt.subject;
+	try {
+		// Invalidate the current jwt associated with this user
+		await db("couples")
+			.where({ id: userId })
+			.update({ jwt: null });
+		// Next, handle deleting sessions for this user
+		if (req.session) {
+			req.session.destroy(error => {
+				if (error) {
+					return next(error);
+				} else {
+					return res.redirect("/");
+				}
 			});
 		}
 	} catch (error) {
