@@ -49,7 +49,7 @@ server.use(session(sessionOptions));
 // Routes
 server.use("/api/announcements", announcementRouter);
 server.use("/api/auth", authRouter);
-server.use("/api/users", usersRouter);
+server.use("/api/users", restricted, usersRouter);
 server.use("/api/weddings", weddingsRouter);
 
 //This is what is shown from the backend when you go to the localhost:5000/
