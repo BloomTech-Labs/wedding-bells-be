@@ -29,24 +29,27 @@ router.post("/register", async (req, res) => {
 	// catch if empty field
 	if (!spouse_one_name || !spouse_two_name || !email || !password) {
 		return res.status(400).json({
-			error: "`spouse_one_name`, `spouse_two_name`, `email`, and `password` are required!"
+			error:
+				"`spouse_one_name`, `spouse_two_name`, `email`, and `password` are required!",
 		});
 	}
 	// insert user with hashed password
 	try {
 		const hash = bcrypt.hashSync(password, 10);
-		const [id] = await db("couples").insert({
-			spouse_one_name,
-			spouse_two_name,
-			email,
-			password: hash,
-		});
+		const [id] = await db("couples")
+			.insert({
+				spouse_one_name,
+				spouse_two_name,
+				email,
+				password: hash,
+			})
+			.returning("id");
 		const [couple] = await db("couples").where({ id });
 		return res.status(201).json(couple);
-	// error
+		// error
 	} catch (error) {
 		res.status(500).json({
-			error: error.message
+			error: error.message,
 		});
 	}
 });
@@ -62,8 +65,8 @@ router.post("/login", async (req, res) => {
 
 	try {
 		const [couple] = await db("couples").where({ email });
-		if (couple && bcrypt.compareSync(password, user.password)) {
-			const token = generateToken(user);
+		if (couple && bcrypt.compareSync(password, couple.password)) {
+			const token = generateToken(couple);
 			await db("couples")
 				.where({ email })
 				.update({ jwt: token });

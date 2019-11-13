@@ -11,7 +11,7 @@ const announcementRouter = require("../routes/announcementRouter");
 const usersRouter = require("../routes/userRouter");
 const vendorsRouter = require("../routes/vendorRouter");
 const weddingsRouter = require("../routes/weddingRouter");
-const authenticationRouter = require("../routes/authRouter");
+const authRouter = require("../routes/authRouter");
 
 //Import the secrets file for jsonwebtoken here
 const secrets = require("../config/secrets.js");
@@ -48,7 +48,7 @@ server.use(session(sessionOptions));
 
 // Routes
 server.use("/api/announcements", announcementRouter);
-server.use("/api/register", authenticationRouter);
+server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/weddings", weddingsRouter);
 
