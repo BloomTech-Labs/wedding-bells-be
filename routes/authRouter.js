@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/users");
 const secrets = require("../config/secrets");
 
+const db = require("../database/config");
+
 function generateToken(user) {
 	const payload = {
 		subject: user.id,
