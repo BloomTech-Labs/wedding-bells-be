@@ -72,11 +72,11 @@ describe("Guests Router", () => {
 		// test("should create a new guest if all data present", async () => {
 		// 	const mockGuest = {
 		// 		name: "Ced",
-		// 		email: "cedric001@gmail.com",
+		// 		email: "ced@gmail.com",
 		// 	};
 		// 	const response = await request(server)
 		// 		.post("/api/weddings/1/guests")
-		// 		.send(mockGuest)
+		// 		.send(mockGuest)l
 		// 	expect(response.body).toBeInstanceOf(Object);
 		// 	expect(response.body).toHaveProperty("id");
 		// 	expect(response.body).toHaveProperty("name");
