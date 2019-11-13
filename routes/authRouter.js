@@ -67,9 +67,11 @@ router.post("/login", async (req, res) => {
 		const [couple] = await db("couples").where({ email });
 		if (couple && bcrypt.compareSync(password, couple.password)) {
 			const token = generateToken(couple);
+
 			await db("couples")
 				.where({ email })
 				.update({ jwt: token });
+
 			return res.status(200).json({
 				message: `Welcome ${spouse_one_name} and ${spouse_two_name}, token `,
 			});
