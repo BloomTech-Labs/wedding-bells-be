@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Guest = require("../models/guests");
 const Vendor = require("../models/vendors");
@@ -24,21 +23,6 @@ function restricted(req, res, next) {
 	} else {
 		res.status(401).json({ message: "Houston, we dont have any valid tokens" });
 	}
-}
-
-function generateToken(user) {
-	const payload = {
-		subject: user.id,
-		email: user.email,
-		name: user.name,
-	};
-
-	const options = {
-		expiresIn: "1d",
-	};
-
-	// extract the secret away so it can be required and used where needed
-	return jwt.sign(payload, secrets.jwtSecret, options); // this method is synchronous
 }
 
 const findGuestById = async (req, res, next) => {
@@ -82,7 +66,6 @@ const findVendorById = async (req, res, next) => {
 };
 
 module.exports = {
-	generateToken,
 	restricted,
 	findGuestById,
 	findVendorById,
