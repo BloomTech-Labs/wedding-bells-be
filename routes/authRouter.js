@@ -7,6 +7,8 @@ const secrets = require("../config/secrets");
 
 const db = require("../database/config");
 
+const restricted = require("../middleware/index.js");
+
 function generateToken(user) {
 	const payload = {
 		subject: user.id,
@@ -88,31 +90,32 @@ router.post("/login", async (req, res) => {
 	}
 });
 
-router.post("/logout", restricted, async (req, res, next) => {
-	// Access to this route handler is granted if a token is supplied via the
-	// `Authorization` header as enforced by the `restricted` middleware.
-	// Thus, we can ensure there is a `userId` from the decodedJwt.
-	const userId = req.decodedJwt.subject;
-	try {
-		// Invalidate the current jwt associated with this user
-		await db("couples")
-			.where({ id: userId })
-			.update({ jwt: null });
-		// Next, handle deleting sessions for this user
-		if (req.session) {
-			req.session.destroy(error => {
-				if (error) {
-					return next(error);
-				} else {
-					return res.redirect("/");
-				}
-			});
-		}
-	} catch (error) {
-		res.status(500).json({
-			error: error.message,
-		});
-	}
-});
+// BOB!!! WHY!?
+// router.post("/logout", restricted, async (req, res, next) => {
+// 	// Access to this route handler is granted if a token is supplied via the
+// 	// `Authorization` header as enforced by the `restricted` middleware.
+// 	// Thus, we can ensure there is a `userId` from the decodedJwt.
+// 	const userId = req.decodedJwt.subject;
+// 	try {
+// 		// Invalidate the current jwt associated with this user
+// 		await db("couples")
+// 			.where({ id: userId })
+// 			.update({ jwt: null });
+// 		// Next, handle deleting sessions for this user
+// 		if (req.session) {
+// 			req.session.destroy(error => {
+// 				if (error) {
+// 					return next(error);
+// 				} else {
+// 					return res.redirect("/");
+// 				}
+// 			});
+// 		}
+// 	} catch (error) {
+// 		res.status(500).json({
+// 			error: error.message,
+// 		});
+// 	}
+// });
 
 module.exports = router;
