@@ -1,5 +1,5 @@
 const request = require("supertest");
-const server = require("../api/server");
+const server = require("../../api/server");
 
 /* ---------------------- User Endpoints ---------------*/
 
@@ -24,7 +24,7 @@ describe("/api/users CRUD", function() {
 		done();
 	});
 
-	it("should return 500 if missing spouse names,email,password fields of user", function(done) {
+	it("should return 500 if missing spouse names,email,password fields of user", async function(done) {
 		request(server)
 			.post("/api/users")
 			.send({
@@ -33,7 +33,8 @@ describe("/api/users CRUD", function() {
 				email: "",
 				password: "",
 			})
-			.expect(500, done);
+			.expect(500);
+		done();
 	});
 
 	it("it should update a user", async function(done) {
@@ -58,7 +59,7 @@ describe("/api/users CRUD", function() {
 
 	it("should delete a user", async function(done) {
 		request(server)
-			.del("/api/users/1")
+			.del("/api/users/2")
 			.expect(200,done);
 		;
 	});
