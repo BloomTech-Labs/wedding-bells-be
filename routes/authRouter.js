@@ -36,12 +36,14 @@ router.post("/register", async (req, res) => {
 	// insert user with hashed password
 	try {
 		const hash = bcrypt.hashSync(password, 10);
-		const [id] = await db("couples").insert({
-			spouse_one_name,
-			spouse_two_name,
-			email,
-			password: hash,
-		});
+		const [id] = await db("couples")
+			.insert({
+				spouse_one_name,
+				spouse_two_name,
+				email,
+				password: hash,
+			})
+			.returning("id");
 		const [couple] = await db("couples").where({ id });
 		return res.status(201).json(couple);
 		// error
@@ -63,11 +65,13 @@ router.post("/login", async (req, res) => {
 
 	try {
 		const [couple] = await db("couples").where({ email });
-		if (couple && bcrypt.compareSync(password, user.password)) {
-			const token = generateToken(user);
+		if (couple && bcrypt.compareSync(password, couple.password)) {
+			const token = generateToken(couple);
+
 			await db("couples")
 				.where({ email })
 				.update({ jwt: token });
+
 			return res.status(200).json({
 				message: `Welcome ${spouse_one_name} and ${spouse_two_name}, token `,
 			});
