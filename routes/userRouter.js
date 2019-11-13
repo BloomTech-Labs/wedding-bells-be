@@ -7,6 +7,8 @@ const express = require("express");
 const router = express();
 router.use(express.json());
 
+// const restricted = require("../middleware/index.js");
+
 // GET User table
 router.get("/", async (req, res) => {
 	try {
