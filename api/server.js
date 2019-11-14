@@ -21,7 +21,7 @@ const { restricted } = require("../middleware");
 
 //Insert Session options here
 const sessionOptions = {
-	name: "#{name of cookie for sessionOptions in server.js",
+	name: "weddingBells",
 	secret: secrets.jwtSecret,
 	cookie: {
 		maxAge: 1000 * 60 * 60,
