@@ -76,7 +76,7 @@ describe("Guests Router", () => {
 		// 	};
 		// 	const response = await request(server)
 		// 		.post("/api/weddings/1/guests")
-		// 		.send(mockGuest);
+		// 		.send(mockGuest)l
 		// 	expect(response.body).toBeInstanceOf(Object);
 		// 	expect(response.body).toHaveProperty("id");
 		// 	expect(response.body).toHaveProperty("name");
@@ -86,23 +86,23 @@ describe("Guests Router", () => {
 		// 	expect(response.body).toHaveProperty("plus_one");
 		// 	expect(response.body).toHaveProperty("wedding_id");
 		// });
-		test("should return HTTP status code 400 if missing data", async () => {
-			const invalidMockGuest = {
-				// missing email
-				name: "Ced",
-			};
+		// test("should return HTTP status code 400 if missing data", async () => {
+		// 	const invalidMockGuest = {
+		// 		// missing email
+		// 		name: "Ced",
+		// 	};
 
-			const response = await request(server)
-				.post("/api/weddings/1/guests")
-				.send(invalidMockGuest);
+		// 	const response = await request(server)
+		// 		.post("/api/weddings/1/guests")
+		// 		.send(invalidMockGuest);
 
-			expect(response.status).toBe(400);
-		});
+		// 	expect(response.status).toBe(400);
+		// });
 		test("should return HTTP status code 400 if given no data", async () => {
 			const emptyMockGuest = {};
 
 			const response = await request(server)
-				.post("/api/weddings/1/guests")
+				.post("/api/weddings/4/guests")
 				.send(emptyMockGuest);
 
 			expect(response.status).toBe(400);
