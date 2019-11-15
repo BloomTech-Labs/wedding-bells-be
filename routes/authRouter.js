@@ -59,7 +59,7 @@ router.post("/register", async (req, res) => {
 // post existing user so they can login
 router.post("/login", async (req, res) => {
 	const { email, password, spouse_two_name, spouse_one_name } = req.body;
-	if (!email || !password || !spouse_one_name || !spouse_two_name) {
+	if (!email || !password) {
 		return res.status(400).json({
 			error: "All fields are required",
 		});

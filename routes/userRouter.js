@@ -20,9 +20,7 @@ router.get("/", async (req, res) => {
 // GET USER table with ID
 router.get("/:id", async (req, res) => {
 	const { id } = req.params;
-	console.log("look at me");
 	try {
-		console.log("look at me");
 		const user = await User.findById(id);
 
 		if (user) {
