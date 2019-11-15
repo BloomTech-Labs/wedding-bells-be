@@ -14,7 +14,8 @@ function find() {
 		"id",
 		"spouse_one_name",
 		"spouse_two_name",
-		"email"
+		"email",
+		"role"
 	);
 }
 

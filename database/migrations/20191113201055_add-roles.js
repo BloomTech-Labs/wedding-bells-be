@@ -1,6 +1,6 @@
 exports.up = function(knex) {
 	return knex.schema.table("couples", table => {
-		table.string("role");
+		table.string("role").defaultTo("user");
 	});
 };
 
