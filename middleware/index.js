@@ -34,6 +34,7 @@ async function restricted(req, res, next) {
 	}
 	try {
 		const [user] = await db("couples").where({ jwt: token });
+		console.log(user);
 		if (!user && token) {
 			return res.status(401).json({
 				error: "Invalid token, please try again after re-logging in.",

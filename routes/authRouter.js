@@ -28,7 +28,7 @@ function generateToken(user) {
 
 // post user w/ hashed password to register
 router.post("/register", async (req, res) => {
-	const { spouse_one_name, spouse_two_name, email, password } = req.body;
+	const { spouse_one_name, spouse_two_name, email, password, role } = req.body;
 	// catch if empty field
 	if (!spouse_one_name || !spouse_two_name || !email || !password) {
 		return res.status(400).json({
@@ -45,9 +45,12 @@ router.post("/register", async (req, res) => {
 				spouse_two_name,
 				email,
 				password: hash,
+				role,
 			})
 			.returning("id");
+
 		const [couple] = await db("couples").where({ id });
+
 		return res.status(201).json(couple);
 		// error
 	} catch (error) {
@@ -78,6 +81,7 @@ router.post("/login", async (req, res) => {
 			return res.status(200).json({
 				message: `Welcome ${spouse_one_name} and ${spouse_two_name}`,
 				token: token,
+				jwt: couple.jwt,
 			});
 		} else {
 			return res.status(401).json({
