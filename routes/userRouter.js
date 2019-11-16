@@ -9,11 +9,22 @@ router.use(express.json());
 
 // GET User table
 router.get("/", async (req, res) => {
-	try {
-		const users = await User.find();
-		res.json(users);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
+	const { subject, role } = req.decodedJwt;
+	if (role === "admin") {
+		try {
+			const users = await User.find();
+			res.json(users);
+		} catch (err) {
+			res.status(500).json({ error: err.message });
+		}
+	} else {
+		User.findById(subject)
+			.then(user => {
+				res.json(user);
+			})
+			.catch(err => {
+				res.status(500).send(err);
+			});
 	}
 });
 
