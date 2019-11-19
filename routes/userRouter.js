@@ -36,6 +36,7 @@ router.get("/:id", async (req, res) => {
 //POST to User table
 router.post("/", async (req, res) => {
 	const user = req.body;
+	const { spouse_one_name, spouse_two_name } = req.body;
 	if (
 		Object.entries(user).length === 0 ||
 		!user.spouse_one_name ||
@@ -49,8 +50,9 @@ router.post("/", async (req, res) => {
 		});
 	}
 	try {
+		const newSlug = `${spouse_one_name}and${spouse_two_name}`;
 		if (user) {
-			const newUser = await User.add(user);
+			const newUser = await User.add({ slug: newSlug, ...user });
 			if (newUser) {
 				res.status(201).json(newUser);
 			}

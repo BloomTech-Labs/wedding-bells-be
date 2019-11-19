@@ -37,6 +37,7 @@ router.post("/register", async (req, res) => {
 	}
 	// insert user with hashed password
 	try {
+		const newSlug = `${spouse_one_name}and${spouse_two_name}`;
 		const hash = bcrypt.hashSync(password, 10);
 		const [id] = await db("couples")
 			.insert({
@@ -44,6 +45,7 @@ router.post("/register", async (req, res) => {
 				spouse_two_name,
 				email,
 				password: hash,
+				slug: newSlug,
 			})
 			.returning("id");
 		const [couple] = await db("couples").where({ id });

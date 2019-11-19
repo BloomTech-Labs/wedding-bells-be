@@ -12,6 +12,7 @@ module.exports = {
 function find() {
 	return db("couples").select(
 		"id",
+		"slug",
 		"spouse_one_name",
 		"spouse_two_name",
 		"email",

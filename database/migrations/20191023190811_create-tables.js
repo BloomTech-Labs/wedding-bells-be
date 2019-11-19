@@ -9,17 +9,18 @@ exports.up = function(knex) {
 				.notNullable()
 				.unique();
 			table.string("password").notNullable();
+			table
+				.string("slug")
+				.notNullable()
+				.unique();
 			table.string("jwt", 512);
 		})
 
 		.createTable("weddings", table => {
 			table.increments();
-			table
-				.string("slug")
-				.notNullable()
-				.unique();
 			table.datetime("date");
 			table.string("location");
+			table.string("slug").references("couples.slug");
 			table.integer("couple_id").references("couples.id");
 		})
 
