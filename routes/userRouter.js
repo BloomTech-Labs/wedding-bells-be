@@ -30,17 +30,28 @@ router.get("/", async (req, res) => {
 
 // GET USER table with ID
 router.get("/:id", async (req, res) => {
+	const { subject, role } = req.decodedJwt;
 	const { id } = req.params;
-	try {
-		const user = await User.findById(id);
+	if (role === "admin") {
+		try {
+			const user = await User.findById(id);
 
-		if (user) {
-			res.status(200).json(user);
-		} else {
-			res.status(404).json({ message: "could not find user " });
+			if (user) {
+				res.status(200).json(user);
+			} else {
+				res.status(404).json({ message: "could not find user " });
+			}
+		} catch (err) {
+			res.status(500).json({ message: "failed to get user" });
 		}
-	} catch (err) {
-		res.status(500).json({ message: "failed to get user" });
+	} else {
+		User.findById(subject)
+			.then(user => {
+				res.json(user);
+			})
+			.catch(err => {
+				res.status(500).send(err);
+			});
 	}
 });
 
