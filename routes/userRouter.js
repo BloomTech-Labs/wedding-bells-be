@@ -95,16 +95,31 @@ router.put("/:id", async (req, res) => {
 // DEL request to with ID
 router.delete("/:id", async (req, res) => {
 	const { id } = req.params;
-	try {
-		const deleted = await User.remove(id);
+	const { subject, role } = req.decodedJwt;
+	if (role === "admin") {
+		try {
+			const deleted = await User.remove(id);
 
-		if (deleted) {
-			res.status(200).json({ removed: deleted });
-		} else {
-			res.status(404).json({ message: "could not find user with given id" });
+			if (deleted) {
+				res.status(200).json({ removed: deleted });
+			} else {
+				res.status(404).json({ message: "could not find user with given id" });
+			}
+		} catch (err) {
+			res.status(500).json({ message: "failed to delete user" });
 		}
-	} catch (err) {
-		res.status(500).json({ message: "failed to delete user" });
+	} else {
+		try {
+			const deleted = await User.remove(subject);
+
+			if (deleted) {
+				res.status(200).json({ removed: deleted });
+			} else {
+				res.status(404).json({ message: "could not find user with given id" });
+			}
+		} catch (err) {
+			res.status(500).json({ message: "failed to delete user" });
+		}
 	}
 });
 
