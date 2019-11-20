@@ -57,21 +57,38 @@ router.get("/:id", async (req, res) => {
 
 // EDIT USER with ID
 router.put("/:id", async (req, res) => {
+	const { subject, role } = req.decodedJwt;
 	const { id } = req.params;
 	const changes = req.body;
 
-	try {
-		const user = await User.findById(id);
+	if (role === "admin") {
+		try {
+			const user = await User.findById(id);
 
-		if (user) {
-			const updatedUser = await User.update(changes, id);
+			if (user) {
+				const updatedUser = await User.update(changes, id);
 
-			res.status(200).json(updatedUser);
-		} else {
-			res.status(404).json({ message: "could not find user with given id" });
+				res.status(200).json(updatedUser);
+			} else {
+				res.status(404).json({ message: "could not find user with given id" });
+			}
+		} catch (err) {
+			res.status(500).json({ message: "Failed to update user" });
 		}
-	} catch (err) {
-		res.status(500).json({ message: "Failed to update user" });
+	} else {
+		try {
+			const user = await User.findById(subject);
+
+			if (user) {
+				const updatedUser = await User.update(changes, subject);
+
+				res.status(200).json(updatedUser);
+			} else {
+				res.status(404).json({ message: "could not find user with given id" });
+			}
+		} catch (err) {
+			res.status(500).json({ message: "Failed to update user" });
+		}
 	}
 });
 
