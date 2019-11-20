@@ -44,33 +44,6 @@ router.get("/:id", async (req, res) => {
 	}
 });
 
-//POST to User table
-router.post("/", async (req, res) => {
-	const user = req.body;
-	if (
-		Object.entries(user).length === 0 ||
-		!user.spouse_one_name ||
-		!user.spouse_two_name ||
-		!user.email ||
-		!user.password
-	) {
-		return res.status(400).json({
-			error:
-				"Missing one or more required properties: spouse_one_name, spouse_two_name, email, password",
-		});
-	}
-	try {
-		if (user) {
-			const newUser = await User.add(user);
-			if (newUser) {
-				res.status(201).json(newUser);
-			}
-		}
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
-});
-
 // EDIT USER with ID
 router.put("/:id", async (req, res) => {
 	const { id } = req.params;

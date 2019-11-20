@@ -4,27 +4,6 @@ const Vendor = require("../models/vendors");
 const db = require("../database/config");
 const secrets = require("../config/secrets");
 
-// function restricted(req, res, next) {
-// 	const token = req.headers.authorization;
-
-// 	if (token) {
-// 		jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
-// 			if (err) {
-// 				//Bad Token!
-// 				res
-// 					.status(401)
-// 					.json({ message: "Houston, it appears our token is bad" });
-// 			} else {
-// 				//The token is a good token!
-// 				req.decodedJwt = decodedToken;
-// 				next();
-// 			}
-// 		});
-// 	} else {
-// 		res.status(401).json({ message: "Houston, we dont have any valid tokens" });
-// 	}
-// }
-
 async function restricted(req, res, next) {
 	const token = req.headers.authorization;
 	if (!token) {
