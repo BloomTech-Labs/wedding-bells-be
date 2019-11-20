@@ -81,6 +81,7 @@ router.post("/login", async (req, res) => {
 			return res.status(200).json({
 				message: `Welcome ${spouse_one_name} and ${spouse_two_name}`,
 				token: token,
+				couple,
 			});
 		} else {
 			return res.status(401).json({
