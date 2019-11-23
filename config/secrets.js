@@ -1,5 +1,5 @@
 module.exports = {
-  jwtSecret:
-    process.env.JWT_SECRET ||
-    "lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20"
+	jwtSecret:
+		process.env.JWT_SECRET ||
+		"lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20lorem20",
 };
