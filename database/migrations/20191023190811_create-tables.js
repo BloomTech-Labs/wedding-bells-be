@@ -9,6 +9,7 @@ exports.up = function(knex) {
 				.notNullable()
 				.unique();
 			table.string("password").notNullable();
+			table.string("jwt", 512);
 		})
 
 		.createTable("weddings", table => {

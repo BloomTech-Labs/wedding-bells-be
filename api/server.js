@@ -11,6 +11,7 @@ const announcementRouter = require("../routes/announcementRouter");
 const usersRouter = require("../routes/userRouter");
 const vendorsRouter = require("../routes/vendorRouter");
 const weddingsRouter = require("../routes/weddingRouter");
+const authRouter = require("../routes/authRouter");
 
 //Import the secrets file for jsonwebtoken here
 const secrets = require("../config/secrets.js");
@@ -20,7 +21,7 @@ const { restricted } = require("../middleware");
 
 //Insert Session options here
 const sessionOptions = {
-	name: "#{name of cookie for sessionOptions in server.js",
+	name: "weddingBells",
 	secret: secrets.jwtSecret,
 	cookie: {
 		maxAge: 1000 * 60 * 60,
@@ -47,7 +48,8 @@ server.use(session(sessionOptions));
 
 // Routes
 server.use("/api/announcements", announcementRouter);
-server.use("/api/users", usersRouter);
+server.use("/api/auth", authRouter);
+server.use("/api/users", restricted, usersRouter);
 server.use("/api/weddings", weddingsRouter);
 
 //This is what is shown from the backend when you go to the localhost:5000/
