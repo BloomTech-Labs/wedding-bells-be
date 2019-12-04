@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
 				.update({ jwt: token });
 
 			return res.status(200).json({
-				message: `Welcome ${spouse_one_name} and ${spouse_two_name}`,
+				message: `Welcome ${couple.spouse_one_name} and ${couple.spouse_two_name}`,
 				token: token,
 				couple,
 			});
