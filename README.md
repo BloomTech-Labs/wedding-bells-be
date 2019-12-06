@@ -50,7 +50,7 @@ https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196c
 
 ## API Documentation
 
-#### 1️⃣ Backend delpoyed at Heroku https://lambda-wedding-bells.herokuapp.com/ <br>
+#### 1️⃣ Backend deployed at Heroku https://weddingbellslabspt5.herokuapp.com/ <br>
 
 ###  1️⃣ Getting started
 
