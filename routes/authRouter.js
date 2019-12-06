@@ -50,8 +50,24 @@ router.post("/register", async (req, res) => {
 			.returning("id");
 
 		const [couple] = await db("couples").where({ id });
+		if (couple && bcrypt.compareSync(password, couple.password)) {
+			const token = generateToken(couple);
 
-		return res.status(201).json(couple);
+			await db("couples")
+				.where({ email })
+				.update({ jwt: token });
+
+			return res.status(201).json({
+				message: `Welcome ${couple.spouse_one_name} and ${couple.spouse_two_name}`,
+				token: token,
+				couple,
+			});
+		} else {
+			return res.status(401).json({
+				error:
+					"You're killing me smalls! You need to provide matching and existing credentials",
+			});
+		}
 		// error
 	} catch (error) {
 		res.status(500).json({
@@ -79,7 +95,7 @@ router.post("/login", async (req, res) => {
 				.update({ jwt: token });
 
 			return res.status(200).json({
-				message: `Welcome ${spouse_one_name} and ${spouse_two_name}`,
+				message: `Welcome ${couple.spouse_one_name} and ${couple.spouse_two_name}`,
 				token: token,
 				couple,
 			});

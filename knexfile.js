@@ -2,7 +2,6 @@ require("dotenv").config();
 module.exports = {
 	development: {
 		client: "pg",
-		useNullAsDefault: true,
 		connection: {
 			connectionString: process.env.DB_CONNECTION_URI,
 		},
@@ -31,7 +30,6 @@ module.exports = {
 		connection: {
 			filename: "./database/test.db3",
 		},
-		useNullAsDefault: true,
 		migrations: {
 			directory: "./database/migrations",
 		},
