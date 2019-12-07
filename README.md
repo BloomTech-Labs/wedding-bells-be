@@ -52,7 +52,7 @@ https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196c
 
 ## API Documentation
 
-Backend server deployed on Heroku: https://polar-hollows-61695.herokuapp.com/
+Backend server deployed on Heroku: https://lambda-wedding-bells.herokuapp.com/
 
 ### 1️⃣ Getting started
 
@@ -82,7 +82,6 @@ $ yarn server
 Why did you choose this framework?
 
 - familiarity - we as a team used Express.js extensively
-  <!-- TODO - add more points here -->
 
 ### 2️⃣ Endpoints
 
@@ -154,7 +153,7 @@ Database schema and model definitions can be found on dbdiagram: https://dbdiagr
   slug:       STRING [not null, unique, note: 'ex: Cedric&Monica']
   date:       DATETIME
   location:   STRING [note: 'ex: Infinite Loop, Cupertino, CA 95014']
-  couple_id:  INTEGER
+  couple_id:  INTEGER [fk couple.id]
 }
 ```
 
@@ -170,7 +169,7 @@ Database schema and model definitions can be found on dbdiagram: https://dbdiagr
   is_going:       BOOLEAN [default: false, not null, note: 'This is the guest's RSVP status']
   has_responded:  BOOLEAN [default: false, not null, note: 'Used to differentiate between first-time RSVPing or editing RSVP']
   plus_one:       BOOLEAN [default: true, not null, note: 'Whether a plus-one is coming or not']
-  wedding_id:     INTEGER
+  wedding_id:     INTEGER [fk wedding.id]
 }
 ```
 
@@ -203,11 +202,37 @@ category_type
 }
 ```
 
+#### Wedding Vendors
+
+---
+
+```
+{
+  wedding_id:                INTEGER
+  vendor_id:                 INTEGER
+  [wedding_id, vendor_id]:   PRIMARY KEY
+}
+```
+
+#### Announcements
+
+---
+
+```
+{
+  id:             INTEGER [pk, increment]
+  title:          STRING [not null]
+  announcement:   STRING [not null]
+  time_stamp:     DATETIME
+  couple_id:      INTEGER [fk couple.id]
+}
+```
+
 ## 2️⃣ Actions
 
 <!-- TODO -->
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+<!-- 🚫 This is an example, replace this with the actions that pertain to your backend
 
 `getOrgs()` -> Returns all organizations
 
@@ -225,11 +250,11 @@ category_type
 
 `getUser(userId)` -> Returns a single user by user ID
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+`addUser(user object)` -> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
 
 `updateUser(userId, changes object)` -> Updates a single user by ID.
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+`deleteUser(userId)` -> deletes everything dependent on the user -->
 
 ## 3️⃣ Environment Variables
 
