@@ -89,7 +89,7 @@ router.post("/login", async (req, res) => {
 	try {
 		const [couple] = await db("couples").where({ email });
 		const { id } = couple;
-		const wedding = await Wedding.findBy({ id });
+		const [wedding] = await Wedding.findBy({ couple_id: id });
 		console.log(wedding);
 		if (couple && bcrypt.compareSync(password, couple.password)) {
 			const token = generateToken(couple);
