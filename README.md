@@ -36,11 +36,13 @@ https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196c
 ## Database Schema
 
 <img
-  src="#{Insert the URL to the database schema. Use https://www.dbdesigner.net/ to create this.}"
+  src="./resources/wedding-bells-db-schema.png"
   alt="backend database schema"  
 />
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/02ddaf23-507e-4101-9b9b-a7156c58000f/deploy-status)](https://app.netlify.com/sites/labspt5weddingbells/deploys)
+
+<!-- TODO - need to remove at some point -->
 
 🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
 
@@ -50,93 +52,187 @@ https://www.notion.so/v1-2-Release-Canvas-Stretch-Goals-29dfefd10ba44536b662196c
 
 ## API Documentation
 
-#### 1️⃣ Backend deployed at Heroku https://weddingbellslabspt5.herokuapp.com/ <br>
+Backend server deployed on Heroku: https://weddingbellslabspt5.herokuapp.com/
 
-###  1️⃣ Getting started
+### 1️⃣ Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
+1. Clone this repo
+2. To install all required dependencies:
 
-- Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+```sh
+$ yarn install
+```
 
-### Backend framework goes here
+3. To start the local server for production:
 
-🚫 Why did you choose this framework?
+```sh
+$ yarn start
+```
 
-- Point One
-- Point Two
-- Point Three
-- Point Four
+4. To start server using testing environment:
 
-###  2️⃣ Endpoints
+```sh
+$ yarn server
+```
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+### Backend Framework Used: Express.js
 
-#### Organization Routes
+Why did you choose this framework?
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+- familiarity - we as a team used Express.js extensively
 
-#### User Routes
+### 2️⃣ Endpoints
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+#### Couples Routes
+
+> NOTE: all of the following API routes are prefixed with `/api`
+
+| Method | Endpoint             | Access Control | Description                                    |
+| ------ | -------------------- | -------------- | ---------------------------------------------- |
+| GET    | `/couples/:coupleId` | owners         | Returns the information for a specific couple. |
+| POST   | `/couples`           | everyone       | Creates a new couple.                          |
+| PUT    | `/couples/:coupleId` | owners         | Modify a couple.                               |
+| DELETE | `/couples/:coupleId` | owners         | Delete a couple.                               |
+
+#### Weddings Routes
+
+| Method | Endpoint               | Access Control | Description                                     |
+| ------ | ---------------------- | -------------- | ----------------------------------------------- |
+| GET    | `/weddings`            | everyone       | Returns a list of all weddings.                 |
+| GET    | `/weddings/:weddingId` | owners         | Returns the information for a specific wedding. |
+| POST   | `/weddings`            | everyone       | Creates a new wedding.                          |
+| PUT    | `/weddings/:weddingId` | owners         | Modify a wedding.                               |
+| DELETE | `/weddings/:weddingId` | owners         | Delete a wedding.                               |
+
+#### Guests Routes
+
+| Method | Endpoint           | Access Control | Description                       |
+| ------ | ------------------ | -------------- | --------------------------------- |
+| GET    | `/guests/:guestId` | owners         | Returns all guests for a wedding. |
+| POST   | `/guests`          | everyone       | Creates a new guest.              |
+| PUT    | `/guests/:guestId` | owners         | Modify a guest.                   |
+| DELETE | `/guests/:guestId` | owners         | Delete a guest.                   |
+
+#### Vendors Routes
+
+| Method | Endpoint             | Access Control | Description                                    |
+| ------ | -------------------- | -------------- | ---------------------------------------------- |
+| GET    | `/vendors`           | everyone       | Returns all vendors.                           |
+| GET    | `/vendors/:vendorId` | everyone       | Returns the information for a specific vendor. |
+| POST   | `/vendors`           | admins         | Creates a new vendor.                          |
+| PUT    | `/vendors/:vendorId` | admins         | Modify a vendor.                               |
+| DELETE | `/vendors/:vendorId` | admins         | Delete a vendor.                               |
 
 # Data Model
 
-🚫This is just an example. Replace this with your data model
+Database schema and model definitions can be found on dbdiagram: https://dbdiagram.io/d/5db2737702e6e93440f29e17
 
-#### 2️⃣ ORGANIZATIONS
+#### Couples
 
 ---
 
 ```
 {
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+  id:               INTEGER [pk, increment]
+  spouse_one_name:  STRING [not null]
+  spouse_two_name:  STRING [not null]
+  email:            STRING [not null, unique]
+  password:         STRING [not null]
 }
 ```
 
-#### USERS
+#### Weddings
 
 ---
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  id:         INTEGER [pk, increment]
+  slug:       STRING [not null, unique, note: 'ex: Cedric&Monica']
+  date:       DATETIME
+  location:   STRING [note: 'ex: Infinite Loop, Cupertino, CA 95014']
+  couple_id:  INTEGER [fk couple.id]
+}
+```
+
+#### Guests
+
+---
+
+```
+{
+  id:             UUID [pk]
+  name:           STRING [not null]
+  email:          STRING [not null]
+  is_going:       BOOLEAN [default: false, not null, note: 'This is the guest's RSVP status']
+  has_responded:  BOOLEAN [default: false, not null, note: 'Used to differentiate between first-time RSVPing or editing RSVP']
+  plus_one:       BOOLEAN [default: true, not null, note: 'Whether a plus-one is coming or not']
+  wedding_id:     INTEGER [fk wedding.id]
+}
+```
+
+#### Vendors
+
+---
+
+```
+{
+  id:            INTEGER [pk, increment]
+  company_name:  STRING [not null]
+  category:      ENUM [one of `category_type`]
+}
+
+category_type
+{
+  Photographer
+  Venue
+  "Hair Stylist"
+  Attire
+  Cake
+  Florist
+  Musicians
+  Stationer
+  Jeweler
+  Favors
+  Rentals
+  "Transportation Service"
+  Lighting
+}
+```
+
+#### Wedding Vendors
+
+---
+
+```
+{
+  wedding_id:                INTEGER
+  vendor_id:                 INTEGER
+  [wedding_id, vendor_id]:   PRIMARY KEY
+}
+```
+
+#### Announcements
+
+---
+
+```
+{
+  id:             INTEGER [pk, increment]
+  title:          STRING [not null]
+  announcement:   STRING [not null]
+  time_stamp:     DATETIME
+  couple_id:      INTEGER [fk couple.id]
 }
 ```
 
 ## 2️⃣ Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+<!-- TODO -->
+
+<!-- 🚫 This is an example, replace this with the actions that pertain to your backend
 
 `getOrgs()` -> Returns all organizations
 
@@ -154,36 +250,23 @@ To get the server running locally:
 
 `getUser(userId)` -> Returns a single user by user ID
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+`addUser(user object)` -> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
 
 `updateUser(userId, changes object)` -> Updates a single user by ID.
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+`deleteUser(userId)` -> deletes everything dependent on the user -->
 
 ## 3️⃣ Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
-create a .env file that includes the following:
+After cloning the repo, copy the `.env.example` file to `.env` and fill in each
+of the variables with your information.
 
-🚫 These are just examples, replace them with the specifics for your app
-
-- `STAGING_DB` - optional development db for using functionality not available in SQLite
-- `NODE_ENV` - set to "development" until ready for "production"
-- `JWT_SECRET` - you can generate this by using a python shell and running:
-
-```python
-import random
-
-CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-_=+'
-
-print(''.join(
-    [random.SystemRandom().choice(CHARS) for i in range(len(CHARS))]
-  )
-)
-```
-- `SENDGRID_API_KEY` - this is generated in your Sendgrid account
-- `STRIPE_SECRET` - this is generated in the Stripe dashboard
+- `DATABASE_URL` - the connection string of either your local or the production Postgres database
+- `DB_ENV` - similar to `NODE_ENV`, should be either one of "development" or "production". used to determine which database to connect to
+- `JWT_SECRET` - the string to be used for generating JSON Web Tokens (JWT)
+- `PORT` - number designating what port to run the backend server on
 
 ## Contributing
 
@@ -224,5 +307,5 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/wedding-bells-fe/blob/master/README.md)
+for details on the frontend of our project.
