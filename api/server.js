@@ -7,9 +7,7 @@ const knexSessionStore = require("connect-session-knex")(session);
 const server = express();
 
 //Import routes from the router file here
-const announcementRouter = require("../routes/announcementRouter");
 const usersRouter = require("../routes/userRouter");
-const vendorsRouter = require("../routes/vendorRouter");
 const weddingsRouter = require("../routes/weddingRouter");
 const authRouter = require("../routes/authRouter");
 
@@ -47,7 +45,7 @@ server.use(express.json());
 server.use(session(sessionOptions));
 
 // Routes
-server.use("/api/announcements", announcementRouter);
+
 server.use("/api/auth", authRouter);
 server.use("/api/users", restricted, usersRouter);
 server.use("/api/weddings", weddingsRouter);
