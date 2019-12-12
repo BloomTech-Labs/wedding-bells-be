@@ -32,7 +32,6 @@ async function add(announcement) {
 
 function findById(id) {
 	return db("announcements")
-		.select("id")
 		.where({ id })
 		.first();
 }
