@@ -4,14 +4,17 @@ const Announcement = require("../models/announcement");
 
 const express = require("express");
 
-const router = express();
+const router = require("express").Router({ mergeParams: true });
 router.use(express.json());
 
 // GET Announcement table
 router.get("/", async (req, res) => {
+	const { weddingId } = req.params;
+
 	try {
-		const announcement = await Announcement.find();
-		res.json(announcement);
+		console.log(weddingId);
+		const announcement = await Announcement.find(weddingId);
+		res.status(200).json(announcement);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
@@ -37,6 +40,7 @@ router.post("/", async (req, res) => {
 // GET Announcement table with ID
 router.get("/:id", async (req, res) => {
 	const { id } = req.params;
+
 	try {
 		const announcement = await Announcement.findById(id);
 
