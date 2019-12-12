@@ -4,11 +4,19 @@ const Wedding = require("../models/weddings");
 const guestsRouter = require("./guestsRouter");
 const vendorRouter = require("./vendorRouter");
 
+const announcementsRouter = require("./announcementRouter");
+const registryRouter = require("./registryRouter");
+
 const express = require("express");
 
 const router = express.Router();
+
 router.use("/:weddingId/guests", guestsRouter);
 router.use("/:weddingId/vendors", vendorRouter);
+
+router.use("/:weddingId/announcements", announcementsRouter);
+router.use("/:weddingId/registry", registryRouter);
+
 // GET VENDOR table
 router.get("/", async (req, res) => {
 	try {
