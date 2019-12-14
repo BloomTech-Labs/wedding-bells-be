@@ -1,7 +1,12 @@
 const router = require("express").Router({ mergeParams: true });
 const uuid = require("uuidv4").default;
 const Guest = require("../models/guests");
+const { findByWeddingId } = require("../models/users");
 const { findGuestById } = require("../middleware");
+const sendGuestInvite = require("../mailers/sendGuestInvite");
+
+const generateInviteURL = (weddingId, guestId) =>
+	`https://www.h3rra.com/weddings/${weddingId}/invite/${guestId}`;
 
 router.get("/", async (req, res) => {
 	const { weddingId } = req.params;
@@ -30,6 +35,9 @@ router.post("/", async (req, res) => {
 	}
 	try {
 		const newGuest = await Guest.add({ id: uuid(), ...guest }, weddingId);
+		const couple = await findByWeddingId(weddingId);
+		const guestInviteURL = generateInviteURL(weddingId, newGuest.id);
+		sendGuestInvite(newGuest, couple, guestInviteURL);
 		res.status(201).json(newGuest);
 	} catch (err) {
 		res.status(500).json({

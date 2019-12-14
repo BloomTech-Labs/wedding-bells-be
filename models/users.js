@@ -5,6 +5,7 @@ module.exports = {
 	find,
 	findBy,
 	findById,
+	findByWeddingId,
 	remove,
 	update,
 };
@@ -36,6 +37,16 @@ function findById(id) {
 		.select("id", "spouse_one_name", "spouse_two_name", "email", "role")
 		.where({ id })
 		.first();
+}
+
+async function findByWeddingId(weddingId) {
+	const user = await db
+		.select(["spouse_one_name", "spouse_two_name", "email"])
+		.from("couples")
+		.leftJoin("weddings", "couples.id", "weddings.couple_id")
+		.where("weddings.id", "=", weddingId)
+		.first();
+	return user;
 }
 
 async function remove(id) {
