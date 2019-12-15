@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const User = require("../models/users");
-
+const bcrypt = require("bcryptjs");
 const express = require("express");
 
 const router = express();
@@ -60,7 +60,6 @@ router.put("/:id", async (req, res) => {
 	const { subject, role } = req.decodedJwt;
 	const { id } = req.params;
 	const changes = req.body;
-
 	if (role === "admin") {
 		try {
 			const user = await User.findById(id);
@@ -80,9 +79,19 @@ router.put("/:id", async (req, res) => {
 			const user = await User.findById(subject);
 
 			if (user) {
-				const updatedUser = await User.update(changes, subject);
-
-				res.status(200).json(updatedUser);
+				const hash = bcrypt.hashSync(changes.password, 10);
+				const updatedUser = await User.update(
+					{
+						spouse_one_name: changes.spouse_one_name,
+						spouse_two_name: changes.spouse_two_name,
+						email: changes.email,
+						password: hash,
+						role: user.role,
+					},
+					subject
+				);
+				const updatedInfo = await User.findById(subject);
+				res.status(200).json(updatedInfo);
 			} else {
 				res.status(404).json({ message: "could not find user with given id" });
 			}

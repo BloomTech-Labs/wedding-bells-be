@@ -79,7 +79,7 @@ router.post("/register", async (req, res) => {
 
 // post existing user so they can login
 router.post("/login", async (req, res) => {
-	const { email, password, spouse_two_name, spouse_one_name } = req.body;
+	const { email, password } = req.body;
 	if (!email || !password) {
 		return res.status(400).json({
 			error: "All fields are required",
@@ -90,7 +90,7 @@ router.post("/login", async (req, res) => {
 		const [couple] = await db("couples").where({ email });
 		const { id } = couple;
 		const [wedding] = await Wedding.findBy({ couple_id: id });
-		console.log(wedding);
+
 		if (couple && bcrypt.compareSync(password, couple.password)) {
 			const token = generateToken(couple);
 
