@@ -79,7 +79,8 @@ router.put("/:id", async (req, res) => {
 
 		if (wedding) {
 			const updatedWedding = await Wedding.update(changes, id);
-			res.json(updatedWedding);
+			const updatedInfo = await Wedding.findById(id);
+			res.json(updatedInfo);
 		} else {
 			res.status(404).json({ message: "could not find wedding with given id" });
 		}
