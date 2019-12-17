@@ -84,12 +84,13 @@ router.put("/:id", async (req, res) => {
 						spouse_one_name: changes.spouse_one_name || user.spouse_one_name,
 						spouse_two_name: changes.spouse_two_name || user.spouse_two_name,
 						email: changes.email || user.email,
-						password: bcrypt.hashSync(changes.password, 10) || user.password,
+						password: changes.password ? bcrypt.hashSync(changes.password, 10) : user.password,
 						role: user.role,
 					},
 					subject
 				);
 				const updatedInfo = await User.findById(subject);
+				console.log(updatedInfo);
 				res.status(200).json(updatedInfo);
 			} else {
 				res.status(404).json({ message: "could not find user with given id" });
