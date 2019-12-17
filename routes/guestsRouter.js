@@ -5,8 +5,11 @@ const { findByWeddingId } = require("../models/users");
 const { findGuestById } = require("../middleware");
 const sendGuestInvite = require("../mailers/sendGuestInvite");
 
-const generateInviteURL = (weddingId, guestId) =>
-	`https://www.h3rra.com/weddings/${weddingId}/invite/${guestId}`;
+const generateInviteURL = (weddingId, guestId) => {
+	const HOSTNAME = process.env.NODE_ENV === "production" 
+		? "https://www.h3rra.com" : "http://localhost:3000"
+	return `${HOSTNAME}/weddings/${weddingId}/invite/${guestId}`;
+}
 
 router.get("/", async (req, res) => {
 	const { weddingId } = req.params;
