@@ -21,6 +21,15 @@ other mailers could be used to:
 **The purpose of this doc is to outline how these mailers work and provide
 information on how to create a new mailer.**
 
+## Getting Started
+
+Familiarity with the following tech is suggested before modifying or developing new mailers:
+
+- **Nodemailer:** https://nodemailer.com/
+- **Ethereal:** https://ethereal.email/
+- **SendGrid:** https://sendgrid.com/docs/
+- **Handlebars:** https://handlebarsjs.com/guide/
+
 ## Folder Structure
 
 All mailers will reside within the `mailer/` directory. In said directory, there
@@ -46,11 +55,11 @@ mailer/
 First off, a mailer consists of two parts:
 
 - **email processing script:** compiles the email template using the templating
-  engine and passes HTML-compiled email to `sendMail.js` script
-- **Handlebars email template:** template email with placeholder variables to be
+  engine (Handlebars) and passes HTML-compiled email to `sendMail.js` script
+- **.hbs email template:** template email with placeholder variables to be
   replaced when compiled
 
-The process in which email templates are compiled then sent is as follows:
+An example of how email templates are compiled then sent is as follows:
 
 1. client app creates new guest via `POST /api/weddings/:weddingId/guest` endpoint
 2. once guest resource is created, above endpoint controller calls `sendGuestInvite()`
