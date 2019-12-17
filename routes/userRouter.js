@@ -79,13 +79,12 @@ router.put("/:id", async (req, res) => {
 			const user = await User.findById(subject);
 
 			if (user) {
-				const hash = bcrypt.hashSync(changes.password, 10);
-				const updatedUser = await User.update(
+				await User.update(
 					{
-						spouse_one_name: changes.spouse_one_name,
-						spouse_two_name: changes.spouse_two_name,
-						email: changes.email,
-						password: hash,
+						spouse_one_name: changes.spouse_one_name || user.spouse_one_name,
+						spouse_two_name: changes.spouse_two_name || user.spouse_two_name,
+						email: changes.email || user.email,
+						password: bcrypt.hashSync(changes.password, 10) || user.password,
 						role: user.role,
 					},
 					subject
