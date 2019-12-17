@@ -1,22 +1,13 @@
 const db = require("../database/config");
 
-module.exports = {
-	add,
-	find,
-	findBy,
-	findById,
-	remove,
-	update,
+const find = async weddingId => {
+	try {
+		return await db("announcements").where({ wedding_id: weddingId });
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
 };
-
-function find() {
-	return db("announcements").select(
-		"id",
-		"title",
-		"announcement",
-		"time_stamp"
-	);
-}
 
 function findBy(filter) {
 	return db("announcements").where(filter);
@@ -30,11 +21,14 @@ async function add(announcement) {
 	return findById(id);
 }
 
-function findById(id) {
-	return db("announcements")
-		.where({ id })
-		.first();
-}
+const findById = async id => {
+	try {
+		return (await db("announcements").where({ id }))[0];
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
 
 async function remove(id) {
 	try {
@@ -58,3 +52,12 @@ async function update(announcement, id) {
 		throw new Error(err);
 	}
 }
+
+module.exports = {
+	add,
+	find,
+	findBy,
+	findById,
+	remove,
+	update,
+};

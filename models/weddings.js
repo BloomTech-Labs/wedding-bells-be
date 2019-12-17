@@ -10,7 +10,10 @@ module.exports = {
 };
 
 function find() {
-	return db("weddings").select("id", "slug", "date", "location", "couple_id");
+	return [
+		db("weddings").select("id", "slug", "date", "location", "couple_id"),
+		db("couples").select("jwt"),
+	];
 }
 
 function findBy(filter) {
