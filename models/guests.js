@@ -18,7 +18,14 @@ const findById = async id => {
 	}
 };
 
-const findByFilter = async filter => {};
+const findByFilter = async filter => {
+	try {
+		return await db("guests").where(filter)
+	} catch (err) {
+		console.error(err);
+		throw err;
+	}
+};
 
 const add = async (guest, weddingId) => {
 	try {
