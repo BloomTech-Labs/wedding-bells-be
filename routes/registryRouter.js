@@ -6,12 +6,14 @@ const express = require("express");
 
 const router = require("express").Router({ mergeParams: true });
 router.use(express.json());
+const { findRegistryById } = require("../middleware");
 
 // GET Registry table
 router.get("/", async (req, res) => {
+	const { weddingId } = req.params;
 	try {
-		const registry = await Registry.find();
-		res.json(registry);
+		const registries = await Registry.findBy({ wedding_id: weddingId });
+		res.json(registries);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
@@ -39,18 +41,13 @@ router.post("/", async (req, res) => {
 });
 
 // GET Registry table with ID
-router.get("/:id", async (req, res) => {
-	const { id } = req.params;
-	try {
-		const registry = await Registry.findById(id);
+router.get("/:id", findRegistryById, (req, res) => {
+	const { registry } = req;
 
-		if (registry) {
-			res.json(registry);
-		} else {
-			res.status(404).json({ message: "could not find registry" });
-		}
-	} catch (err) {
-		res.status(500).json({ message: "failed to get registry" });
+	if (registry) {
+		res.status(200).json(registry);
+	} else {
+		res.status(404).json({ message: "could not find registry with given id" });
 	}
 });
 

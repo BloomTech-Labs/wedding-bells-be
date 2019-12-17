@@ -37,29 +37,8 @@ router.post("/", async (req, res) => {
 	}
 });
 
-// GET Announcement table with ID
-// router.get("/:id", async (req, res) => {
-// 	const { id } = req.params;
-
-// 	try {
-// 		console.log(id);
-// 		const announcement = await Announcement.findById(id);
-
-// 		if (announcement) {
-// 			res.json(announcement);
-// 		} else {
-// 			res.status(404).json({ message: "could not find announcement" });
-// 		}
-// 	} catch (err) {
-// 		res.status(500).json({ message: "failed to get announcement" });
-// 	}
-// });
-
-router.get("/:id", findAnnouncementById, async (req, res) => {
+router.get("/:id", findAnnouncementById, (req, res) => {
 	const { announcement } = req;
-	const { weddingId } = req.params;
-
-	console.log(weddingId);
 
 	if (announcement) {
 		res.status(200).json(announcement);

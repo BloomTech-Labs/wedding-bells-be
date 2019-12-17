@@ -15,16 +15,14 @@ router.use("/:weddingId/guests", guestsRouter);
 router.use("/:weddingId/vendors", vendorRouter);
 
 router.use("/:weddingId/announcements", announcementsRouter);
-router.use("/:weddingId/registry", registryRouter);
+router.use("/:weddingId/registries", registryRouter);
 
 // GET VENDOR table
 router.get("/", async (req, res) => {
-	
 	if (role === "admin") {
 		try {
 			const weddings = await Wedding.find();
-			const tryMe = 
-			res.json(weddings);
+			const tryMe = res.json(weddings);
 		} catch (err) {
 			res.status(500).json({ message: err.message });
 		}

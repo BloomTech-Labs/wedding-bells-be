@@ -18,5 +18,11 @@ exports.seed = function(knex) {
 			company_image_dropdown: "Target",
 			wedding_id: 1,
 		},
+		{
+			company_name: "Best Buy",
+			url: "https://www.bestbuy.com",
+			company_image_dropdown: "Best Buy",
+			wedding_id: 2,
+		},
 	]);
 };
