@@ -4,14 +4,17 @@ const Announcement = require("../models/announcement");
 
 const express = require("express");
 
-const router = express();
+const router = require("express").Router({ mergeParams: true });
 router.use(express.json());
+const { findAnnouncementById } = require("../middleware");
 
 // GET Announcement table
 router.get("/", async (req, res) => {
+	const { weddingId } = req.params;
+
 	try {
-		const announcement = await Announcement.find();
-		res.json(announcement);
+		const announcements = await Announcement.findBy({ wedding_id: weddingId });
+		res.status(200).json(announcements);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
@@ -34,19 +37,15 @@ router.post("/", async (req, res) => {
 	}
 });
 
-// GET Announcement table with ID
-router.get("/:id", async (req, res) => {
-	const { id } = req.params;
-	try {
-		const announcement = await Announcement.findById(id);
+router.get("/:id", findAnnouncementById, (req, res) => {
+	const { announcement } = req;
 
-		if (announcement) {
-			res.json(announcement);
-		} else {
-			res.status(404).json({ message: "could not find announcement" });
-		}
-	} catch (err) {
-		res.status(500).json({ message: "failed to get announcement" });
+	if (announcement) {
+		res.status(200).json(announcement);
+	} else {
+		res
+			.status(404)
+			.json({ message: "could not find announcement with given id" });
 	}
 });
 
