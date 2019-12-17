@@ -33,7 +33,7 @@ async function add(user) {
 
 function findById(id) {
 	return db("couples")
-		.select("id", "spouse_one_name", "spouse_two_name", "email", "role")
+		.select("id", "spouse_one_name", "spouse_two_name", "email", "role", "password")
 		.where({ id })
 		.first();
 }
