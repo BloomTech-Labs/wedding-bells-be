@@ -6,10 +6,12 @@ const { findGuestById } = require("../middleware");
 const sendGuestInvite = require("../mailers/sendGuestInvite");
 
 const generateInviteURL = (weddingId, guestId) => {
-	const HOSTNAME = process.env.NODE_ENV === "production" 
-		? "https://www.h3rra.com" : "http://localhost:3000"
+	const HOSTNAME =
+		process.env.NODE_ENV === "production"
+			? "https://www.h3rra.com"
+			: "http://localhost:3000";
 	return `${HOSTNAME}/weddings/${weddingId}/invite/${guestId}`;
-}
+};
 
 router.get("/", async (req, res) => {
 	const { weddingId } = req.params;
@@ -51,7 +53,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", findGuestById, async (req, res) => {
 	const { id } = req.params;
-	const updates = req.body;
+	const updates = { ...req.body, has_responded: true };
 	try {
 		await Guest.update(id, updates);
 		res.status(204).end();

@@ -27,7 +27,7 @@ async function add(wedding) {
 
 function findById(id) {
 	return db("weddings")
-		.select("id", "slug")
+		.select("id", "slug", "location", "date")
 		.where({ id })
 		.first();
 }
