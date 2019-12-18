@@ -66,7 +66,9 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
 	const { id } = req.params;
 	try {
-		const wedding = await Wedding.findById(id);
+
+		// try finding by slug if id is not valid number
+		const wedding = parseInt(id) ? await Wedding.findById(id) : await Wedding.findBy({slug: id});
 
 		if (wedding) {
 			res.json(wedding);

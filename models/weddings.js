@@ -17,7 +17,7 @@ function find() {
 }
 
 function findBy(filter) {
-	return db("weddings").where(filter);
+	return db("weddings").where(filter).first();
 }
 
 async function add(wedding) {
