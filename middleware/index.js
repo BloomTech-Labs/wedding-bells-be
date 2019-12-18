@@ -47,9 +47,12 @@ async function restricted(req, res, next) {
 }
 
 const findGuestById = async (req, res, next) => {
-	const { id } = req.params;
+	const { id, weddingId } = req.params;
 	try {
-		const guest = await Guest.findById(id);
+		const [guest] = await Guest.findByFilter({
+			id,
+			wedding_id: weddingId,
+		});
 		if (!guest) {
 			return res.status(404).json({
 				error: `No guest exists with id ${id}!`,
