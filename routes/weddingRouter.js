@@ -4,22 +4,48 @@ const Wedding = require("../models/weddings");
 const guestsRouter = require("./guestsRouter");
 const vendorRouter = require("./vendorRouter");
 
+const announcementsRouter = require("./announcementRouter");
+const registryRouter = require("./registryRouter");
+
 const express = require("express");
 
 const router = express.Router();
+
 router.use("/:weddingId/guests", guestsRouter);
 router.use("/:weddingId/vendors", vendorRouter);
+
+router.use("/:weddingId/announcements", announcementsRouter);
+router.use("/:weddingId/registries", registryRouter);
+
 // GET VENDOR table
 router.get("/", async (req, res) => {
-	try {
-		const weddings = await Wedding.find();
-		res.json(weddings);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
+	if (role === "admin") {
+		try {
+			const weddings = await Wedding.find();
+			const tryMe = res.json(weddings);
+		} catch (err) {
+			res.status(500).json({ message: err.message });
+		}
+	} else {
+		Wedding.findById(subject)
+			.then(wedding => {
+				res.json(wedding);
+			})
+			.catch(err => {
+				res.status(500).send(err);
+			});
 	}
 });
 
-//POST to VENDOR table
+// User.findById(subject)
+// 	.then(user => {
+// 		res.json(user);
+// 	})
+// 	.catch(err => {
+// 		res.status(500).send(err);
+// 	});
+
+//POST to WEDDING table
 router.post("/", async (req, res) => {
 	const wedding = req.body;
 	try {
@@ -78,8 +104,15 @@ router.put("/:id", async (req, res) => {
 		const wedding = await Wedding.findById(id);
 
 		if (wedding) {
-			const updatedWedding = await Wedding.update(changes, id);
-			res.json(updatedWedding);
+			await Wedding.update(
+				{
+					location: changes.location || wedding.location,
+					date: changes.date || wedding.date,
+				},
+				id
+			);
+			const updatedInfo = await Wedding.findById(id);
+			res.json(updatedInfo);
 		} else {
 			res.status(404).json({ message: "could not find wedding with given id" });
 		}

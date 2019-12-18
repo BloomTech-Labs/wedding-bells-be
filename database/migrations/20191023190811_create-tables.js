@@ -72,12 +72,36 @@ exports.up = function(knex) {
 			table.string("title").notNullable();
 			table.string("announcement").notNullable();
 			table.datetime("time_stamp");
-			table.integer("couple_id").references("couples.id");
+			table.integer("wedding_id").references("weddings.id");
+		})
+		.createTable("registry", table => {
+			table.increments();
+			table.string("company_name").notNullable();
+			table.string("url").notNullable();
+			table.enu("company_image_dropdown", [
+				"Amazon",
+				"Sears",
+				"Walmart",
+				"Target",
+				"Bed Bath and Beyond",
+				"Willams-Senoma",
+				"Kohls",
+				"Wayfair",
+				"Macys",
+				"Best Buy",
+				"Bloomingdales",
+				"Pottery Barn",
+				"The Container Store",
+				"Ikea",
+				"Other",
+			]);
+			table.integer("wedding_id").references("weddings.id");
 		});
 };
 
 exports.down = function(knex) {
 	return knex.schema
+		.dropTableIfExists("registry")
 		.dropTableIfExists("announcements")
 		.dropTableIfExists("wedding_vendors")
 		.dropTableIfExists("vendors")

@@ -10,7 +10,10 @@ module.exports = {
 };
 
 function find() {
-	return db("weddings").select("id", "slug", "date", "location", "couple_id");
+	return [
+		db("weddings").select("id", "slug", "date", "location", "couple_id"),
+		db("couples").select("jwt"),
+	];
 }
 
 function findBy(filter) {
@@ -27,7 +30,7 @@ async function add(wedding) {
 
 function findById(id) {
 	return db("weddings")
-		.select("id", "slug", "location", "date")
+		.select("id", "slug", "date", "location", "couple_id")
 		.where({ id })
 		.first();
 }
