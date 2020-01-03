@@ -23,9 +23,13 @@ router.get("/", async (req, res) => {
 //POST to Announcement table
 router.post("/", async (req, res) => {
 	const announcement = req.body;
+	const { weddingId } = req.params;
 	try {
 		if (announcement) {
-			const newAnnouncement = await Announcement.add(announcement);
+			const newAnnouncement = await Announcement.add({
+				wedding_id: weddingId,
+				...announcement,
+			});
 			if (newAnnouncement) {
 				res.status(201).json(newAnnouncement);
 			} else {
