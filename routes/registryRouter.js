@@ -22,13 +22,11 @@ router.get("/", async (req, res) => {
 //POST to Registry table
 router.post("/", async (req, res) => {
 	const registry = req.body;
-	const timeStamp = new Date.now()
 	const { weddingId } = req.params;
 	try {
 		if (registry) {
 			const newRegistry = await Registry.add({
 				wedding_id: weddingId,
-				time_stamp: timeStamp,
 				...registry,
 			});
 			if (newRegistry) {
