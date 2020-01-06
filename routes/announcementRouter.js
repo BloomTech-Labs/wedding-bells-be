@@ -25,8 +25,18 @@ router.post("/", async (req, res) => {
 	const announcement = req.body;
 	const { weddingId } = req.params;
 	const today = new Date();
-	const timeStamp = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours()+':'+today.getMinutes()+':'+today.getSeconds();
-	console.log(timeStamp)
+	const timeStamp =
+		today.getFullYear() +
+		"-" +
+		(today.getMonth() + 1) +
+		"-" +
+		today.getDate() +
+		" " +
+		today.getHours() +
+		":" +
+		today.getMinutes() +
+		":" +
+		today.getSeconds();
 	try {
 		if (announcement) {
 			const newAnnouncement = await Announcement.add({
