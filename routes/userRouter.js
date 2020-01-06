@@ -90,6 +90,7 @@ router.put("/:id", async (req, res) => {
 					subject
 				);
 				const updatedInfo = await User.findById(subject);
+				console.log(updatedInfo)
 				res.status(200).json(updatedInfo);
 			} else {
 				res.status(404).json({ message: "could not find user with given id" });
