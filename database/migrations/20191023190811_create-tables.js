@@ -71,7 +71,7 @@ exports.up = function(knex) {
 			table.increments();
 			table.string("title").notNullable();
 			table.string("announcement").notNullable();
-			table.datetime("time_stamp");
+			table.date("time_stamp");
 			table.integer("wedding_id").references("weddings.id");
 		})
 		.createTable("registry", table => {

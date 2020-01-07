@@ -23,9 +23,27 @@ router.get("/", async (req, res) => {
 //POST to Announcement table
 router.post("/", async (req, res) => {
 	const announcement = req.body;
+	const { weddingId } = req.params;
+	const today = new Date();
+	const timeStamp =
+		today.getFullYear() +
+		"-" +
+		(today.getMonth() + 1) +
+		"-" +
+		today.getDate() +
+		" " +
+		today.getHours() +
+		":" +
+		today.getMinutes() +
+		":" +
+		today.getSeconds();
 	try {
 		if (announcement) {
-			const newAnnouncement = await Announcement.add(announcement);
+			const newAnnouncement = await Announcement.add({
+				wedding_id: weddingId,
+				time_stamp: timeStamp,
+				...announcement,
+			});
 			if (newAnnouncement) {
 				res.status(201).json(newAnnouncement);
 			} else {
